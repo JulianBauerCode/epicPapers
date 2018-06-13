@@ -44,8 +44,9 @@
 \usepackage{appendixnumberbeamer}
 
 \usepackage{tikz}
-\usetikzlibrary{fit,arrows,shapes,positioning,patterns}
+\usetikzlibrary{fit,arrows,shapes,shapes.misc,positioning,patterns}
 \usepackage{environ}
+\usepackage{tikz-3dplot} %requires 3dplot.sty to be in same directory, or in your LaTeX installation
 \makeatletter
 \newsavebox{\measure@tikzpicture}
 \NewEnviron{scaletikzpicturetowidth}[1]{%
@@ -60,6 +61,11 @@
 \makeatother
 
 \usepackage{listings}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+cross/.default={1pt}}
+
 
 \definecolor{keywords}{RGB}{0,0,0}
 \definecolor{comments}{RGB}{0,0,113}
@@ -140,15 +146,20 @@
     \begin{enumerate}[I]
         \item Kinematischer Teil (15 Seiten)
         \begin{itemize}
-			\item[§1] Definition von \textbf{Gleichzeitigkeit}
-			\item[§2] Über die \textbf{Relativität von Längen und Zeiten}
-			\item[§3] Theorie der \textbf{Koordinaten- und Zeittransformation} von dem ruhenden auf ein relativ 
-						zu diesem in gleichförmiger Translationsbewegung befindliches System
-			\item[§4] \textbf{Physikalischer Bedeutung} der erhaltenen Gleichungen, bewegte starre Körper und bewegte 
-						Uhren betreffend
-			\item[§5] Additionstheoreme der Geschwindigkeiten
+			\item[§1]   Definition von \textbf{Gleichzeitigkeit}
+			\item[§2]   Über die \textbf{Relativität von Längen und Zeiten}
+			\item[§3]   Theorie der \textbf{Koordinaten- und Zeittransformation} von dem ruhenden
+                        auf ein relativ zu diesem in gleichförmiger Translationsbewegung 
+                        befindliches System
+			\item[§4]   \textbf{Physikalischer Bedeutung} der erhaltenen Gleichungen, 
+                        bewegte starre Körper und bewegte Uhren betreffend
+			\item[§5]   Additionstheoreme der Geschwindigkeiten
 		\end{itemize}
+        \vspace{10pt}
 		\item Elektrodynamischer Teil (15 Seiten)
+        \begin{itemize}
+            \item[]\dots
+        \end{itemize}
 	\end{enumerate}
 \end{frame}
 
@@ -158,14 +169,81 @@
 
 
 
-
 %\begin{figure}
 %\includegraphics[width=0.7\textwidth]{./malte/image2994.eps}
 %\caption*{Examined shapes}
 %\end{figure}
 
 
+\begin{frame}
 
+%Angle Definitions
+%-----------------
+
+%set the plot display orientation
+%synatax: \tdplotsetdisplay{\theta_d}{\phi_d}
+\tdplotsetmaincoords{70}{20}
+
+\begin{figure}[h]
+\centering
+%start tikz picture, and use the tdplot_main_coords style to implement the display 
+%coordinate transformation provided by 3dplot
+\begin{tikzpicture}[scale=5,tdplot_main_coords]
+
+%set up some coordinates 
+%-----------------------
+\coordinate (O) at (0,0,0);
+
+%define polar coordinates for some vector
+%TODO: look into using 3d spherical coordinate system
+\pgfmathsetmacro{\rvec}{1.2}
+\pgfmathsetmacro{\thetavec}{50}
+\pgfmathsetmacro{\phivec}{60}
+\newlength{\distanceLabels}
+\setlength{\distanceLabels}{1pt}
+
+%determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
+%also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
+%of the point (P).
+%syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
+\tdplotsetcoord{P}{\rvec}{\thetavec}{\phivec}
+
+%draw figure contents
+%--------------------
+
+%draw the main coordinate system axes
+\draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+\draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=south east]{$y$};
+\draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+
+%draw a vector from origin to point (P) 
+%\draw[-stealth,color=red, line width=0.6mm] (O) -- (P);
+\draw (P) node[ cross=8pt, 
+                line width=0.7mm,
+                label={[label distance=10pt]above:{Ruhender Punkt}}
+                ]{};
+
+%draw projection on xy plane, and a connecting line
+\draw[dashed, color=blue, stealth-stealth]
+        (P) -- node[
+            label={[label distance=\distanceLabels{}]right:{z}}]{}
+        (Pxy);
+
+\draw[dashed, color=blue,stealth-stealth]
+        (Pxy) -- node[
+            label={[label distance=\distanceLabels{}]right:{y}}]{}
+        (Px);
+
+\draw[dashed, color=blue,stealth-stealth]
+        (Pxy) -- node[
+            label={[label distance=\distanceLabels{}]above:{x}}]{}
+        (Py);
+
+\end{tikzpicture}
+\end{figure}
+$x = x \cdot{} 1\text{Maßstab}$
+
+\end{frame}
 
 
 
