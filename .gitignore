@@ -1,3 +1,9 @@
+# Do not track generated pdf files
+*.pdf
+
+# Ignore all swap file
+*.swp
+
 # Specific directories
 /output/
 

@@ -1,0 +1,170 @@
+\documentclass[]{beamer}%[handout]
+\usepackage{pgfpages}
+\setbeamercolor{item projected}{fg=black,bg=white}
+\usetheme{Frankfurt}%Warsaw Madrid Frankfurt
+\usecolortheme{seahorse}%dove seagull seahorse 
+\setbeamertemplate{mini frames}{}	%removes dots in header but creates navigation bar
+\beamertemplatenavigationsymbolsempty	% removes navigation bar
+\defbeamertemplate{footline}{author and page number}{%
+    \usebeamercolor[fg]{page number in head/foot}%
+    \usebeamerfont{page number in head/foot}%
+    \hspace{1em}\insertshortauthor\hfill%
+    \insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%\insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt
+    }
+\setbeamertemplate{footline}[author and page number]{}
+
+\usefonttheme[onlymath]{serif}
+\usepackage[utf8]{inputenc}
+
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+%\graphicspath{{./pictures/}{./zeichnungen/}}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[square,authoryear]{natbib}%square oder round
+\usepackage{palatino}
+\usepackage{color}
+
+\usepackage[per-mode=symbol,decimalsymbol=comma]{siunitx}
+\usepackage{caption}
+\usepackage{import}
+\usepackage{multicol}
+\usepackage{epsfig}
+\usepackage{float}
+
+\renewcommand{\ln}[1]{{\rm ln}\left(#1\right)}
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{\TPHorizModule}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{tikz}
+\usetikzlibrary{fit,arrows,shapes,positioning,patterns}
+\usepackage{environ}
+\makeatletter
+\newsavebox{\measure@tikzpicture}
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+  \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
+\makeatother
+
+\usepackage{listings}
+
+\definecolor{keywords}{RGB}{0,0,0}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+
+\input{./00_macro}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{Albert Einsteins \glqq{}Spezielle Relativitätstheorie\grqq{} einfach präsentiert}
+\author[Julian Bauer]{\begin{tabular}{c} 
+Julian Bauer 
+\end{tabular}}
+
+\institute{Karlsruhe Institute of Technology (KIT)}
+\date[]{13.06.2018}
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Einleitung}
+
+\begin{frame}
+\only<1>
+{
+\tableofcontents[hideallsubsections,currentsection,currentsubsection]
+}
+\only<2>
+{
+\frametitle{Einleitung}
+\begin{itemize}
+\item \underline{Task}:
+	\begin{itemize}
+	\item Design a biaxial tensile specimen suitable for the validation of anisotropic damage models for sheet moulding compound (SMC).
+		Such a specimen has to result in damage and failure in the biaxially loaded, central specimen area.
+	\end{itemize}
+\visible<3->
+{
+\item \underline{Approach}:
+	\begin{itemize}
+	\item Multiobjective shape optimisation:
+		\begin{itemize}
+		\item Create a parametric model as a function of a parameter vector $\vp$.
+		\item Formulate objective functions, measuring the appropriateness of a given specimen.
+		\item Find a parameter vector $\vp$, minimising the objective functions.
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+}
+}
+\only<3>
+{
+\frametitle{Introduction}
+test test test
+%\begin{figure}
+%\includegraphics[width=0.7\textwidth]{./malte/image2994.eps}
+%\caption*{Examined shapes}
+%\end{figure}
+}
+\only<4>
+{
+\frametitle{Introduction}
+\begin{itemize}
+\item \underline{Task}:
+	\begin{itemize}
+	\item Design a biaxial tensile specimen suitable for the validation of anisotropic damage models for sheet moulding compound (SMC).
+		Such a specimen has to result in damage and failure in the biaxially loaded, central specimen area.
+	\end{itemize}
+\visible<3->
+{
+\item \underline{Approach}:
+	\begin{itemize}
+	\item Multiobjective shape optimisation:
+		\begin{itemize}
+		\item Create a parametric model as a function of a parameter vector $\vp$.
+		\item Formulate objective functions, measuring the appropriateness of a given specimen.
+		\item Find a parameter vector $\vp$, minimising the objective functions.
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+}
+}
+\end{frame}
+
+
+\end{document}
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
