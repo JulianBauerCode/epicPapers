@@ -6,6 +6,8 @@
 
 # Specific directories
 /output/
+**/pictures/
+
 
 # Cache of pytest
 .pytest_cache/
