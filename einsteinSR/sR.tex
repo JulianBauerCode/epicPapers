@@ -133,9 +133,9 @@ cross/.default={1pt}}
 	\href{https://pep20.org/}{PEP20.org} folgend 
     \begin{figure}[h]
             \centering
-            \includegraphics[width = 0.7\textwidth]{pep20}
+            \includegraphics[width = 0.7\textwidth]{pep20}\\
+            \dots
     \end{figure}
-    
     hat A.E. eine einfache (komplexe) 
     Lösung für die Elektrodynamik gesucht und in
     \glqq Zur Elektrodynamik bewegter Körper\grqq{} formuliert.
@@ -163,86 +163,232 @@ cross/.default={1pt}}
 	\end{enumerate}
 \end{frame}
 
+
+
+\section{§1 Gleichzeitigkeit}
 \begin{frame}
-    Ok here we go
+    \frametitle{Raum}
+    \begin{itemize}
+        \item Das \textbf{\glqq{}ruhende System\grqq{}:}
+        \begin{itemize}
+            \item Die Newtonschen mechanischen Gleichungen gelten
+            \begin{itemize}
+                \item   Keine Kraft $\rightarrow$ keine Beschleunigung
+                \item   Kraft = Masse * Beschleunigung
+                \item   Actio = Reactio
+            \end{itemize}
+            \item       Der \textbf{Ort} eines ruhenden Punktes im ruhenden System
+                        kann über Koordinaten 
+                        bestimmt werden. Diese Koordinaten stellen Vielfache starrer 
+                        Maßstäbe dar.
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 
+\begin{frame}
+\begin{columns}
+\begin{column}{0.5\textwidth}
 
-%\begin{figure}
-%\includegraphics[width=0.7\textwidth]{./malte/image2994.eps}
-%\caption*{Examined shapes}
-%\end{figure}
-
+    %set the plot display orientation
+    %synatax: \tdplotsetdisplay{\theta_d}{\phi_d}
+    \tdplotsetmaincoords{60}{20}
+    
+    \begin{figure}[h]
+    \centering
+    %start tikz picture, and use the tdplot_main_coords style to implement the display 
+    %coordinate transformation provided by 3dplot
+    \begin{tikzpicture}[scale=5,tdplot_main_coords]
+    
+    %set up some coordinates 
+    %-----------------------
+    \coordinate (O) at (0,0,0);
+    
+    %define polar coordinates for some vector
+    %TODO: look into using 3d spherical coordinate system
+    \pgfmathsetmacro{\rvec}{1.2}
+    \pgfmathsetmacro{\thetavec}{50}
+    \pgfmathsetmacro{\phivec}{60}
+    \newlength{\distanceLabels}
+    \setlength{\distanceLabels}{1pt}
+    
+    %determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
+    %also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
+    %of the point (P).
+    %syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
+    \tdplotsetcoord{P}{\rvec}{\thetavec}{\phivec}
+    
+    %draw figure contents
+    %--------------------
+    
+    %draw the main coordinate system axes
+    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=south east]{$y$};
+    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+    
+    %draw a vector from origin to point (P) 
+    %\draw[-stealth,color=red, line width=0.6mm] (O) -- (P);
+    \draw (P) node[ cross=8pt, 
+                    line width=0.7mm,
+                    label={[label distance=10pt]above:{Ruhender Punkt}}
+                    ]{};
+    
+    %draw projection on xy plane, and a connecting line
+    \draw[dashed, color=blue, stealth-stealth]
+            (P) -- node[
+                label={[label distance=\distanceLabels{}]right:{z}}]{}
+            (Pxy);
+    
+    \draw[dashed, color=blue,stealth-stealth]
+            (Pxy) -- node[
+                label={[label distance=\distanceLabels{}]right:{y}}]{}
+            (Px);
+    
+    \draw[dashed, color=blue,stealth-stealth]
+            (Pxy) -- node[
+                label={[label distance=\distanceLabels{}]above:{x}}]{}
+            (Py);
+    
+    %Draw ein Massstab
+    \draw[thick, color=green, stealth-stealth]
+            (0.2,-0.1,0) -- node[
+                label={[label distance=\distanceLabels{}]below:{\text{Maßstab}}}]{}
+            (0.3,-0.1,0);    
+    
+    \end{tikzpicture}
+    \end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}  %%<--- here
+    \centering
+    \mbox{$x =$ x-fache Länge des Maßstabs}\\
+    \vspace{5pt}
+    \dots
+\end{column}
+\end{columns}
+\end{frame}
 
 \begin{frame}
+    \begin{itemize}
+        \item Die \textbf{Bewegung} eines Körpers ist\\
+            \begin{center}
+                der Ort des Körpers als Funktion der \textbf{Zeit}
+            \end{center}
+    \end{itemize}
 
-%Angle Definitions
-%-----------------
+    %set the plot display orientation
+    %synatax: \tdplotsetdisplay{\theta_d}{\phi_d}
+    \tdplotsetmaincoords{55}{30}
+    
+    \begin{figure}[h]
+    \centering
+    %start tikz picture, and use the tdplot_main_coords style to implement the display 
+    %coordinate transformation provided by 3dplot
+    \begin{tikzpicture}[scale=4,tdplot_main_coords]
+    
+    %set up some coordinates 
+    %-----------------------
+    \coordinate (O) at (0,0,0);
+    
+    %define polar coordinates for some vector
+    %TODO: look into using 3d spherical coordinate system
+    \pgfmathsetmacro{\rvec}{1.2}
+    \pgfmathsetmacro{\thetavec}{50}
+    \pgfmathsetmacro{\phivec}{60}
+    %\let \relax if length is already defined
+    % https://tex.stackexchange.com/a/184993
+    \let\distanceLabels\relax
+    \newlength{\distanceLabels}
+    \setlength{\distanceLabels}{1pt}
+    
+    
+    %draw figure contents
+    %--------------------
+    
+    %draw the main coordinate system axes
+    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=south east]{$y$};
+    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
 
-%set the plot display orientation
-%synatax: \tdplotsetdisplay{\theta_d}{\phi_d}
-\tdplotsetmaincoords{70}{20}
+    
+    \coordinate (previous) at (O);
+    \foreach \step in {0.1, 0.2, ..., 1.0}{
 
-\begin{figure}[h]
-\centering
-%start tikz picture, and use the tdplot_main_coords style to implement the display 
-%coordinate transformation provided by 3dplot
-\begin{tikzpicture}[scale=5,tdplot_main_coords]
+    %determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
+    %also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
+    %of the point (P).
+    %syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
+    \tdplotsetcoord{P}{\rvec*\step}{\thetavec}{\phivec*\step*\step}
 
-%set up some coordinates 
-%-----------------------
-\coordinate (O) at (0,0,0);
+    \draw (P) node[ cross=4pt, 
+                    line width=0.4mm,
+                    ]{};
+    
+    %draw projection on xy plane, and a connecting line
+    \draw[dashed, color=blue, stealth-stealth]
+            (P) -- (Pxy);
+    \draw[dashed, color=blue,stealth-stealth]
+            (Pxy) -- (Px);
+    \draw[dashed, color=blue,stealth-stealth]
+            (Pxy) -- (Py);
 
-%define polar coordinates for some vector
-%TODO: look into using 3d spherical coordinate system
-\pgfmathsetmacro{\rvec}{1.2}
-\pgfmathsetmacro{\thetavec}{50}
-\pgfmathsetmacro{\phivec}{60}
-\newlength{\distanceLabels}
-\setlength{\distanceLabels}{1pt}
+    \draw[thick, red] (previous) -- (P); 
 
-%determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
-%also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
-%of the point (P).
-%syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
-\tdplotsetcoord{P}{\rvec}{\thetavec}{\phivec}
+    \coordinate (previous) at (P);
+}
+    \end{tikzpicture}
+    \end{figure}
 
-%draw figure contents
-%--------------------
+\end{frame}
 
-%draw the main coordinate system axes
-\draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
-\draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=south east]{$y$};
-\draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+\begin{frame}
+    \begin{itemize}
+        \item Ein \textbf{Ereignis} ist gekennzeichnet durch\\
+            \begin{center}
+                einen \textbf{Ort} und eine \textbf{Zeit}
+            \end{center}
+        \visible<2->{
+            \item Beispiele:
+            \begin{center}
+                Wir sind \textbf{hier} und \textbf{jetzt}.\\
+                \vspace{5pt}
+        \visible<3->{
+                Der Körper ist \textbf{jetzt dort}.
+                    }
+            \end{center}}
+    \end{itemize}
+\end{frame}
 
-%draw a vector from origin to point (P) 
-%\draw[-stealth,color=red, line width=0.6mm] (O) -- (P);
-\draw (P) node[ cross=8pt, 
-                line width=0.7mm,
-                label={[label distance=10pt]above:{Ruhender Punkt}}
-                ]{};
+\begin{frame}
+    \begin{itemize}
+        \item Die \textbf{Bewegung} eines Körpers kann als\\
+            \begin{center}
+                \textbf{Abfolge von Ereignissen} interpretiert werden.
+            \end{center}
+    \end{itemize}
+\end{frame}
 
-%draw projection on xy plane, and a connecting line
-\draw[dashed, color=blue, stealth-stealth]
-        (P) -- node[
-            label={[label distance=\distanceLabels{}]right:{z}}]{}
-        (Pxy);
+\begin{frame}
+    \begin{itemize}
+        \item Wir definieren Zeit über \textbf{Gleichzeitigkeit}\\
+            \vspace{5pt}
+            \begin{figure}[h]
+                    \centering
+                    \includegraphics[width = 0.9\textwidth]{gleichzeitigkeit2}\\
+            \end{figure}
+    \end{itemize}
+\end{frame}
 
-\draw[dashed, color=blue,stealth-stealth]
-        (Pxy) -- node[
-            label={[label distance=\distanceLabels{}]right:{y}}]{}
-        (Px);
 
-\draw[dashed, color=blue,stealth-stealth]
-        (Pxy) -- node[
-            label={[label distance=\distanceLabels{}]above:{x}}]{}
-        (Py);
+\section{§2 Relativität Zeiten \& Längen}
+\begin{frame}
+\end{frame}
 
-\end{tikzpicture}
-\end{figure}
-$x = x \cdot{} 1\text{Maßstab}$
+\section{§3 Transformationen}
+\begin{frame}
+\end{frame}
 
+\section{§4 Bedeutung}
+\begin{frame}
 \end{frame}
 
 
