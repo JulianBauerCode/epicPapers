@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+
+\newcommand{\rail}[3]{%
+    \begin{scope}[xshift=#1cm,yshift=#2cm]
+    \draw[line width=2pt] (-0.1cm,0) -- (#3,0);
+    \draw[line width=1pt, dashed] (0,-0.1cm) node[below]{Ziel} -- (0,2cm) ;
+    \end{scope}
+}
+
+\newcommand{\locomotive}[2]{%
+    \begin{scope}[xshift=#1cm,yshift=#2cm]
+    \draw[line width=2pt] (0,0.3cm) -- ++(6cm,0) -- ++(0,1.4cm) -- ++(-5cm,0) -- (0,0.3cm);
+    \draw[line width=2pt] (0.5cm,0.9cm) -- ++(1.5cm,0) -- (2.0cm,1.7cm); 
+    \foreach \wheel in {1,2,3.5,4.5,5.5}{
+        \draw [line width=2pt]([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
+    }
+    \end{scope}
+}
+
+\newcommand{\railCar}[2]{%
+    \begin{scope}[xshift=#1cm,yshift=#2cm]
+    \draw[line width=2pt] (0,0.3cm) -- ++(5cm,0) -- ++(0,1.4cm) -- ++(-5cm,0) -- (0,0.3cm);
+    \foreach \wheel in {0.8,1.8,3.2,4.2}{
+        \draw [line width=2pt]([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
+    }
+    \end{scope}
+}
+
+
+\newpage{}
+\resizebox{0.5\textwidth}{!}{%
+    \begin{tikzpicture}[scale=1]
+        \begin{scope}[line cap=round]
+            \rail{0}{0}{11.5cm};
+            \locomotive{0}{0}; 
+            \railCar{6.5}{0};
+        \end{scope}
+    \end{tikzpicture}%
+}
+
+\end{document}
+
