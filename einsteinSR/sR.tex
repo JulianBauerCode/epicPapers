@@ -209,6 +209,7 @@ cross/.default={1pt}}
     \pgfmathsetmacro{\rvec}{1.2}
     \pgfmathsetmacro{\thetavec}{50}
     \pgfmathsetmacro{\phivec}{60}
+    \let\distanceLabels\relax
     \newlength{\distanceLabels}
     \setlength{\distanceLabels}{1pt}
     
@@ -312,29 +313,29 @@ cross/.default={1pt}}
     
     \coordinate (previous) at (O);
     \foreach \step in {0.1, 0.2, ..., 1.0}{
-
-    %determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
-    %also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
-    %of the point (P).
-    %syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
-    \tdplotsetcoord{P}{\rvec*\step}{\thetavec}{\phivec*\step*\step}
-
-    \draw (P) node[ cross=4pt, 
-                    line width=0.4mm,
-                    ]{};
     
-    %draw projection on xy plane, and a connecting line
-    \draw[dashed, color=blue, stealth-stealth]
-            (P) -- (Pxy);
-    \draw[dashed, color=blue,stealth-stealth]
-            (Pxy) -- (Px);
-    \draw[dashed, color=blue,stealth-stealth]
-            (Pxy) -- (Py);
+        %determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
+        %also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
+        %of the point (P).
+        %syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
+        \tdplotsetcoord{P}{\rvec*\step}{\thetavec}{\phivec*\step*\step}
 
-    \draw[thick, red] (previous) -- (P); 
+        \draw (P) node[ cross=4pt, 
+                        line width=0.4mm,
+                        ]{};
+        
+        %draw projection on xy plane, and a connecting line
+        \draw[dashed, color=blue, stealth-stealth]
+                (P) -- (Pxy);
+        \draw[dashed, color=blue,stealth-stealth]
+                (Pxy) -- (Px);
+        \draw[dashed, color=blue,stealth-stealth]
+                (Pxy) -- (Py);
 
-    \coordinate (previous) at (P);
-}
+        \draw[thick, red] (previous) -- (P); 
+
+        \coordinate (previous) at (P);
+    }
     \end{tikzpicture}
     \end{figure}
 
