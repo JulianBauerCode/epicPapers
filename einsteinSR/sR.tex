@@ -44,7 +44,7 @@
 \usepackage{appendixnumberbeamer}
 
 \usepackage{tikz}
-\usetikzlibrary{fit,arrows,shapes,shapes.misc,positioning,patterns}
+\usetikzlibrary{math,fit,arrows,shapes,shapes.misc,positioning,patterns}
 \usepackage{environ}
 \usepackage{tikz-3dplot} %requires 3dplot.sty to be in same directory, or in your LaTeX installation
 \makeatletter
@@ -365,6 +365,91 @@ cross/.default={1pt}}
                 \textbf{Abfolge von Ereignissen} interpretiert werden.
             \end{center}
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    %fragile-option is needed if macros are to be executed in beamer frame
+    % see  https://tex.stackexchange.com/a/325472
+    \frametitle{Gleichzeitigkeit}
+%\tikzmath{\x1 = 2; \y1 =1;} 
+\newcommand{\clock}[4]{%
+    \begin{scope}[xshift=#1,yshift=#2,line cap=round]
+    \draw [line width=1.6pt] (0,0) circle (1.15cm);
+    \foreach \angle in {0, 30, ..., 330} 
+        \draw[line width=1pt] (\angle:0.89cm) -- (\angle:1cm);
+    \foreach \angle in {0,90,180,270}
+        \draw[line width=1.4pt] (\angle:0.82cm) -- (\angle:1cm);
+    \draw[line width=1.6pt] (0,0) -- (90-30*#3:0.4cm); % hour-hand
+    \draw[line width=1.3pt] (0,0) -- (90-6*#4:0.65cm); % minute-hand
+    \end{scope}
+}
+
+\newcommand{\guy}[3]{%
+    \begin{scope}[xshift=#1,yshift=#2,scale=#3]
+        %\begin{pgflowlevelscope}{\pgftransformscale{#3}}
+            
+            \draw[line width=2pt] (0,0) circle (1cm);               % head
+            \draw[fill=black] (35:0.3cm) circle (0.08cm);           % right eye
+            \draw[fill=black] (145:0.3cm) circle (0.08cm);          % left eye
+            \draw[line width=2pt] ([shift={+(0cm,0cm)}]245:0.5cm) arc (245:295:0.5cm);
+            
+            \draw[line width=2pt] (0,-1cm) -- ++(-90:2.25cm);       % body 
+            \draw[line width=2pt] (0,-2cm) -- ++(30:1.5cm);         % right arms
+            \draw[line width=2pt] (0,-2cm) -- ++(150:1.5cm);        % left arms
+            \draw[line width=2pt] (0,-3.25cm) -- ++(-60:1.5cm);     % rights leg
+            \draw[line width=2pt] (0,-3.25cm) -- ++(240:1.5cm);     % left leg
+        %\end{pgflowlevelscope}
+    \end{scope}
+}
+
+\newcommand{\rail}[3]{%
+    \begin{scope}[xshift=#1,yshift=#2]
+    \draw[line width=2pt] (-0.1cm,0) -- (#3,0);
+    \draw[line width=1pt, dashed] (0,-0.1cm) node[below]{Ziel} -- (0,2cm) ;
+    \end{scope}
+}
+
+\newcommand{\locomotive}[2]{%
+    \begin{scope}[xshift=#1,yshift=#2]
+    \draw[line width=2pt] (0,0.3cm) -- ++(6cm,0) -- ++(0,1.4cm) -- ++(-5cm,0) -- (0,0.3cm);
+    \draw[line width=2pt] (0.5cm,0.9cm) -- ++(1.5cm,0) -- (2.0cm,1.7cm); 
+    \foreach \wheel in {1,2,3.5,4.5,5.5}{
+        \draw [line width=2pt]([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
+    }
+    \end{scope}
+}
+
+\newcommand{\railCar}[2]{%
+    \begin{scope}[xshift=#1,yshift=#2]
+    \draw[line width=2pt] (0,0.3cm) -- ++(5cm,0) -- ++(0,1.4cm) -- ++(-5cm,0) -- (0,0.3cm);
+    \foreach \wheel in {0.8,1.8,3.2,4.2}{
+        \draw [line width=2pt]([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
+    }
+    \end{scope}
+}
+
+\newcommand{\train}[3]{%
+    \begin{scope}[shift={++(#1,#2)}]
+        \begin{pgflowlevelscope}{\pgftransformscale{#3}}
+            \rail{0}{0}{11.5cm};
+            \locomotive{0}{0}; 
+            \railCar{6.5cm}{0};
+        \end{pgflowlevelscope}
+    \end{scope}
+}
+
+    \begin{figure}[h]
+        \centering
+        \fbox{
+        \begin{tikzpicture}
+            \clock{-3cm}{0}{7}{0};    
+            \guy{0}{0}{0.5};
+            \train{-3cm}{-5cm}{0.8};
+            \draw (current bounding box.north east) rectangle (current bounding box.south west);
+        \end{tikzpicture}
+        }
+    \end{figure}
+
 \end{frame}
 
 \begin{frame}
