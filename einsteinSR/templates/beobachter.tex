@@ -1,0 +1,39 @@
+% Arithmetic of the guy
+% Author: Juan Luis Varona
+% http://www.unirioja.es/cu/jvarona/
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+\newcommand{\guy}[2]{%
+    \begin{scope}[xshift=#1cm,yshift=#2cm]
+    \draw[line width=2pt] (0,0) circle (1cm);               % head
+    \draw[fill=black] (35:0.3cm) circle (0.08cm);           % right eye
+    \draw[fill=black] (145:0.3cm) circle (0.08cm);          % left eye
+    \draw[line width=2pt] ([shift={+(0cm,0cm)}]245:0.5cm) arc (245:295:0.5cm);
+    
+    \draw[line width=2pt] (0,-1cm) -- ++(-90:2.25cm);       % body 
+    \draw[line width=2pt] (0,-2cm) -- ++(30:1.5cm);         % right arms
+    \draw[line width=2pt] (0,-2cm) -- ++(150:1.5cm);        % left arms
+    \draw[line width=2pt] (0,-3.25cm) -- ++(-60:1.5cm);     % rights leg
+    \draw[line width=2pt] (0,-3.25cm) -- ++(240:1.5cm);     % left leg
+
+%    \draw[help lines] (0,0) grid (4,3);
+%    \draw[thick,blue] ([shift=(30:1cm)]2,1) arc (30:70:1cm);
+%    \draw[thick,red] ([shift={+(2cm,1cm)}]30:1cm) arc (30:60:1cm);
+%    %https://tex.stackexchange.com/a/66265
+    \end{scope}
+}
+
+\newpage{}
+\resizebox{0.5\textwidth}{!}{%
+    \begin{tikzpicture}[scale=1]
+        \begin{scope}[line cap=round]
+            \guy{0}{0}; 
+        \end{scope}
+    \end{tikzpicture}%
+}
+
+\end{document}
+
