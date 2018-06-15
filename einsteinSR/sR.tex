@@ -519,7 +519,7 @@ cross/.default={1pt}}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Aufgabe: Synchrone Uhren}
+    \frametitle{Aufgabe: Synchrone ruhende Uhren}
     \begin{figure}[h]
         \centering
         \begin{tikzpicture}
@@ -539,7 +539,7 @@ cross/.default={1pt}}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Aufgabe: Synchrone Uhren}
+    \frametitle{Aufgabe: Synchrone ruhende Uhren}
     \begin{figure}[h]
             \centering
             \includegraphics[width = \textwidth]{problemSyncron}
@@ -561,6 +561,7 @@ cross/.default={1pt}}
 
 \begin{frame}
     \begin{figure}[h]
+        \frametitle{Synchrone ruhende Uhren}
         \centering
         \begin{tikzpicture}
             \spaceTime{-3cm}{0cm}{1.5}{1.5}{1.2}{x_A}{y_A}{z_A}{t_A};
@@ -580,19 +581,40 @@ cross/.default={1pt}}
                 -- (\xB,\yStart+\dY) 
                 node[midway, above]{$\overline{AB}$};
             % Draw light forward
-            \draw [line width = 2pt, ->] 
+            \draw [line width = 2pt, ->,red] 
                 (\xA,\yStart+\dY*2) 
-                node [label={[label distance=\lD]left:{$t_A$}}]{}
+                node [label={[label distance=\lD,black]left:{$t_A$}}]{}
                 -- (\xB,\yStart+\dY*2) 
-                node [label={[label distance=\lD]right:{$t_B$}}]{};
+                node [label={[label distance=\lD,black]right:{$t_B$}}]{};
             % Draw light backward
-            \draw [line width = 2pt, ->] 
+            \draw [line width = 2pt, ->,red] 
                 (\xB,\yStart+\dY*3) 
-                node [label={[label distance=\lD]right:{}}]{}
+                node [label={[label distance=\lD,black]right:{}}]{}
                 -- (\xA,\yStart+\dY*3) 
-                node [label={[label distance=\lD]left:{$t^{\prime}_A$}}]{};
+                node [label={[label distance=\lD,black]left:{$t^{\prime}_A$}}]{};
         \end{tikzpicture}
-    \end{figure}        
+    \end{figure}
+    \only<2>{
+        Synchronisationsbedingung:       
+        \begin{equation*}
+            t_B - t_A = t^{\prime}_A - t_B
+        \end{equation*}
+    }
+    \only<3>{
+        Bestimmung der Lichtgeschwindigkeit im leeren Raum:
+        \begin{equation*}
+            V=\frac{2\overline{AB}}{t^{\prime}_A - t_A}
+        \end{equation*}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Die Zeit}
+    \begin{figure}[h]
+            \centering
+            \includegraphics[width = \textwidth]{dieZeit}
+            \caption{\cite{Einstein1905}}
+    \end{figure}
 \end{frame}
 
 \section{§2 Relativität Zeiten \& Längen}
