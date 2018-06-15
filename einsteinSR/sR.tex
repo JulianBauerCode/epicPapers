@@ -74,6 +74,133 @@ cross/.default={1pt}}
 
 \input{./00_macro}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tikz functions
+
+\newcommand{\drawBasis}[5]{%
+    %1 scaleFont
+    %2 scaleLineWidth
+    %3 label x-axis
+    %4 label y-axis
+    %5 label z-axis
+    \tikzmath{  \sLW=#2;}
+    \draw[line width=1pt*\sLW,->] (0,0,0) -- (1,0,0) node[scale=#1, anchor=north east]{$#3$};
+    \draw[line width=1pt*\sLW,->] (0,0,0) -- (0,1,0) node[scale=#1, anchor=south]{$#4$};
+    \draw[line width=1pt*\sLW,->] (0,0,0) -- (0,0,1) node[scale=#1, anchor=south]{$#5$};
+}
+
+\newcommand{\clock}[6]{%
+    \begin{scope}[xshift=#1, yshift=#2, scale=#3, line cap=round]
+        \tikzmath{
+            \sLW = #4;  % Scale line widths
+        } 
+        \draw [line width=1.6pt*\sLW] (0,0) circle (1.15cm);
+        \foreach \angle in {0, 30, ..., 330} 
+            \draw[line width=1pt*\sLW] (\angle:0.89cm) -- (\angle:1cm);
+        \foreach \angle in {0,90,180,270}
+            \draw[line width=1.4pt*\sLW] (\angle:0.82cm) -- (\angle:1cm);
+        \draw[line width=1.6pt*\sLW] (0,0) -- (90-30*#5:0.4cm); % hour-hand
+        \draw[line width=1.3pt*\sLW] (0,0) -- (90-6*#6:0.65cm); % minute-hand
+    \end{scope}
+}
+
+\newcommand{\guy}[4]{%
+    \begin{scope}[xshift=#1,yshift=#2,scale=#3]
+        \tikzmath{
+            \sLW = #4;  % Scale line widths
+        } 
+        \draw[line width=2pt*\sLW] (0,0) circle (1cm);               % head
+        \draw[fill=black] (35:0.3cm) circle (0.08cm*\sLW);           % right eye
+        \draw[fill=black] (145:0.3cm) circle (0.08cm*\sLW);          % left eye
+        \draw[line width=2pt*\sLW] ([shift={+(0cm,0cm)}]245:0.5cm) arc (245:295:0.5cm);
+        
+        \draw[line width=2pt*\sLW] (0,-1cm) -- ++(-90:2.25cm);       % body 
+        \draw[line width=2pt*\sLW] (0,-2cm) -- ++(30:1.5cm);         % right arms
+        \draw[line width=2pt*\sLW] (0,-2cm) -- ++(150:1.5cm);        % left arms
+        \draw[line width=2pt*\sLW] (0,-3.25cm) -- ++(-60:1.5cm);     % rights leg
+        \draw[line width=2pt*\sLW] (0,-3.25cm) -- ++(240:1.5cm);     % left leg
+    \end{scope}
+}
+
+\newcommand{\rail}[5]{%
+    \begin{scope}[xshift=#1, yshift=#2, scale=#3]
+        \tikzmath{
+            \sLW = #4;
+        }
+        \draw[line width=2pt*\sLW] (-0.1cm,0) -- (#5,0);
+        \draw[line width=1pt*\sLW, dashed] (0,-0.1cm) node[below]{Ziel} -- (0,2cm) ;
+    \end{scope}
+}
+
+\newcommand{\locomotive}[4]{%
+    \begin{scope}[xshift=#1, yshift=#2, scale=#3]
+        \tikzmath{
+            \sLW = #4;
+        }
+        \draw[line width=2pt*\sLW] (0,0.3cm) 
+            -- ++(6cm,  0) 
+            -- ++(0,    1.4cm) 
+            -- ++(-5cm, 0) 
+            --   (0,    0.3cm);
+        \draw[line width=2pt*\sLW] (0.5cm,0.9cm) -- ++(1.5cm,0) -- (2.0cm,1.7cm); 
+        \foreach \wheel in {1,2,3.5,4.5,5.5}{
+            \draw [line width=2pt*\sLW]([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
+        }
+    \end{scope}
+}
+
+\newcommand{\railCar}[4]{%
+    \begin{scope}[xshift=#1, yshift=#2, scale=#3]
+        \tikzmath{
+            \sLW = #4;
+        } 
+        \draw[line width=2pt*\sLW] 
+                  (0,   0.3cm) 
+            --  ++(5cm, 0)
+            --  ++(0,   1.4cm)
+            --  ++(-5cm,0)
+            --    (0,   0.3cm);
+        \foreach \wheel in {0.8,1.8,3.2,4.2}{
+            \draw [line width=2pt*\sLW]
+                ([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
+        }
+    \end{scope}
+}
+
+\newcommand{\train}[4]{%
+    \begin{scope}[shift={++(#1,#2)}, scale=#3]
+        \rail{0}{0}{#3}{#4}{11.5cm};
+        \locomotive{0}{0}{#3}{#4}; 
+        \railCar{6.5cm*#3}{0}{#3}{#4};
+    \end{scope}
+}
+
+\newcommand{\spaceTime}[9]{%
+    %1 xshift
+    %2 yshift
+    %3 scale
+    %4 scaleLineWidth
+    %5 scaleFont
+    %6 label x
+    %7 label y
+    %8 label z
+    %9 label t
+    \begin{scope}[xshift=#1, yshift=#2, scale=#3]
+        \tdplotsetmaincoords{55}{30}
+        \begin{scope}[scale=1, tdplot_main_coords]
+            \drawBasis{#5}{#4}{#6}{#7}{#8}
+            \begin{scope}[scale=2]
+                \clock{0.43cm}{0.1cm}{0.15}{0.8*#4}{9}{5};
+                \begin{scope}[xshift=0.7cm, yshift=0]    
+                    \node[scale=#5](0,0){$#9$};
+                \end{scope}
+            \end{scope}
+        \end{scope}
+        \tdplotsetmaincoords{0}{0}
+    \end{scope}
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title
 \begin{document}
@@ -185,78 +312,56 @@ cross/.default={1pt}}
     \end{itemize}
 \end{frame}
 
-
 \begin{frame}
 \begin{columns}
 \begin{column}{0.5\textwidth}
-
-    %set the plot display orientation
-    %synatax: \tdplotsetdisplay{\theta_d}{\phi_d}
-    \tdplotsetmaincoords{60}{20}
-    
     \begin{figure}[h]
-    \centering
-    %start tikz picture, and use the tdplot_main_coords style to implement the display 
-    %coordinate transformation provided by 3dplot
-    \begin{tikzpicture}[scale=5,tdplot_main_coords]
-    
-    %set up some coordinates 
-    %-----------------------
-    \coordinate (O) at (0,0,0);
-    
-    %define polar coordinates for some vector
-    %TODO: look into using 3d spherical coordinate system
-    \pgfmathsetmacro{\rvec}{1.2}
-    \pgfmathsetmacro{\thetavec}{50}
-    \pgfmathsetmacro{\phivec}{60}
-    \let\distanceLabels\relax
-    \newlength{\distanceLabels}
-    \setlength{\distanceLabels}{1pt}
-    
-    %determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
-    %also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
-    %of the point (P).
-    %syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
-    \tdplotsetcoord{P}{\rvec}{\thetavec}{\phivec}
-    
-    %draw figure contents
-    %--------------------
-    
-    %draw the main coordinate system axes
-    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
-    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=south east]{$y$};
-    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
-    
-    %draw a vector from origin to point (P) 
-    %\draw[-stealth,color=red, line width=0.6mm] (O) -- (P);
-    \draw (P) node[ cross=8pt, 
-                    line width=0.7mm,
-                    label={[label distance=10pt]above:{Ruhender Punkt}}
-                    ]{};
-    
-    %draw projection on xy plane, and a connecting line
-    \draw[dashed, color=blue, stealth-stealth]
-            (P) -- node[
-                label={[label distance=\distanceLabels{}]right:{z}}]{}
-            (Pxy);
-    
-    \draw[dashed, color=blue,stealth-stealth]
-            (Pxy) -- node[
-                label={[label distance=\distanceLabels{}]right:{y}}]{}
-            (Px);
-    
-    \draw[dashed, color=blue,stealth-stealth]
-            (Pxy) -- node[
-                label={[label distance=\distanceLabels{}]above:{x}}]{}
-            (Py);
-    
-    %Draw ein Massstab
-    \draw[thick, color=green, stealth-stealth]
-            (0.2,-0.1,0) -- node[
-                label={[label distance=\distanceLabels{}]below:{\text{Maßstab}}}]{}
-            (0.3,-0.1,0);    
-    
-    \end{tikzpicture}
+        \centering
+        % Set the plot display orientation
+        \tdplotsetmaincoords{60}{20}
+        % Use display orientation
+        \begin{tikzpicture}[scale=5,tdplot_main_coords]
+            \tikzmath{
+                \labelDistance=1;
+                \rvec=1.2;
+                \thetavec=50;
+                \phivec=60;
+            }
+            
+            % Define P by polar coordinates
+            \tdplotsetcoord{P}{\rvec}{\thetavec}{\phivec}
+            
+            % Draw the main coordinate system axes
+            \drawBasis{1}{1}{x}{y}{z};
+            
+            % Draw a vector from origin to point (P) 
+            \draw (P) node[ cross=8pt, 
+                            line width=0.7mm,
+                            label={[label distance=10pt]above:{Ruhender Punkt}}
+                            ]{};
+            
+            % Draw projections
+            \draw[dashed, color=blue, stealth-stealth]
+                    (P) -- node[
+                        label={[label distance=1pt*\labelDistance]right:{z}}]{}
+                    (Pxy);
+            
+            \draw[dashed, color=blue,stealth-stealth]
+                    (Pxy) -- node[
+                        label={[label distance=1pt*\labelDistance]right:{y}}]{}
+                    (Px);
+            
+            \draw[dashed, color=blue,stealth-stealth]
+                    (Pxy) -- node[
+                        label={[label distance=1pt*\labelDistance]above:{x}}]{}
+                    (Py);
+            
+            % Draw ein Massstab
+            \draw[thick, color=green, stealth-stealth]
+                    (0.2,-0.1,0) -- node[
+                        label={[label distance=1pt*\labelDistance]below:{\text{Maßstab}}}]{}
+                    (0.3,-0.1,0);    
+        \end{tikzpicture}
     \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}  %%<--- here
@@ -275,68 +380,46 @@ cross/.default={1pt}}
                 der Ort des Körpers als Funktion der \textbf{Zeit}
             \end{center}
     \end{itemize}
-
-    %set the plot display orientation
-    %synatax: \tdplotsetdisplay{\theta_d}{\phi_d}
-    \tdplotsetmaincoords{55}{30}
-    
     \begin{figure}[h]
-    \centering
-    %start tikz picture, and use the tdplot_main_coords style to implement the display 
-    %coordinate transformation provided by 3dplot
-    \begin{tikzpicture}[scale=4,tdplot_main_coords]
-    
-    %set up some coordinates 
-    %-----------------------
-    \coordinate (O) at (0,0,0);
-    
-    %define polar coordinates for some vector
-    %TODO: look into using 3d spherical coordinate system
-    \pgfmathsetmacro{\rvec}{1.2}
-    \pgfmathsetmacro{\thetavec}{50}
-    \pgfmathsetmacro{\phivec}{60}
-    %\let \relax if length is already defined
-    % https://tex.stackexchange.com/a/184993
-    \let\distanceLabels\relax
-    \newlength{\distanceLabels}
-    \setlength{\distanceLabels}{1pt}
-    
-    
-    %draw figure contents
-    %--------------------
-    
-    %draw the main coordinate system axes
-    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
-    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=south east]{$y$};
-    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+        \centering
+        % Set the plot display orientation
+        \tdplotsetmaincoords{55}{30}
 
-    
-    \coordinate (previous) at (O);
-    \foreach \step in {0.1, 0.2, ..., 1.0}{
-    
-        %determine a coordinate (P) using (r,\theta,\phi) coordinates.  This command
-        %also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
-        %of the point (P).
-        %syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\phi}
-        \tdplotsetcoord{P}{\rvec*\step}{\thetavec}{\phivec*\step*\step}
+        % Use display orientation
+        \begin{tikzpicture}[scale=4,tdplot_main_coords]
+            \tikzmath{
+                \labelDistance=1;
+                \rvec=1.2;
+                \thetavec=50;
+                \phivec=60;
+            }
+            % Draw Basis
+            \drawBasis{1}{1}{x}{y}{z}
 
-        \draw (P) node[ cross=4pt, 
-                        line width=0.4mm,
-                        ]{};
+            % Define coordinate previous staring with origin
+            \coordinate (previous) at (0,0,0);
+            \foreach \step in {0.1, 0.2, ..., 1.0}{
+                \tdplotsetcoord{P}{\rvec*\step}{\thetavec}{\phivec*\step*\step}
+
+                \draw (P) node[ cross=4pt, 
+                                line width=0.4mm,
+                                ]{};
         
-        %draw projection on xy plane, and a connecting line
-        \draw[dashed, color=blue, stealth-stealth]
-                (P) -- (Pxy);
-        \draw[dashed, color=blue,stealth-stealth]
-                (Pxy) -- (Px);
-        \draw[dashed, color=blue,stealth-stealth]
-                (Pxy) -- (Py);
+                % Draw projections
+                \draw[dashed, color=blue, stealth-stealth]
+                        (P) -- (Pxy);
+                \draw[dashed, color=blue,stealth-stealth]
+                        (Pxy) -- (Px);
+                \draw[dashed, color=blue,stealth-stealth]
+                        (Pxy) -- (Py);
 
-        \draw[thick, red] (previous) -- (P); 
+                % Connect points
+                \draw[thick, red] (previous) -- (P); 
 
-        \coordinate (previous) at (P);
-    }
-    \end{tikzpicture}
+                % Update previous
+                \coordinate (previous) at (P);
+            }
+        \end{tikzpicture}
     \end{figure}
 
 \end{frame}
@@ -348,14 +431,15 @@ cross/.default={1pt}}
                 einen \textbf{Ort} und eine \textbf{Zeit}
             \end{center}
         \visible<2->{
-            \item Beispiele:
-            \begin{center}
-                Wir sind \textbf{hier} und \textbf{jetzt}.\\
-                \vspace{5pt}
+        \item Beispiele:
+        \begin{itemize}
+            \item Wir sind \textbf{hier} und \textbf{jetzt}.
+            \vspace{5pt}
+        }
         \visible<3->{
-                Der Körper ist \textbf{jetzt dort}.
-                    }
-            \end{center}}
+            \item Der Körper ist \textbf{jetzt dort}.
+        }
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -368,7 +452,6 @@ cross/.default={1pt}}
     \end{itemize}
 \end{frame}
 
-
 \begin{frame}
     \begin{itemize}
         \item   Wir definieren Zeit über \textbf{Gleichzeitigkeit}\\
@@ -376,6 +459,7 @@ cross/.default={1pt}}
             \begin{figure}[h]
                     \centering
                     \includegraphics[width = 0.9\textwidth]{gleichzeitigkeit2}\\
+                    \caption{\cite{Einstein1905}}
             \end{figure}
             \vspace{5pt}
     \end{itemize}
@@ -385,92 +469,6 @@ cross/.default={1pt}}
     %fragile-option is needed if macros are to be executed in beamer frame
     % see  https://tex.stackexchange.com/a/325472
     \frametitle{Gleichzeitigkeit}
-\newcommand{\clock}[6]{%
-    \begin{scope}[xshift=#1, yshift=#2, scale=#3, line cap=round]
-        \tikzmath{
-            \sLW = #4;  % Scale line widths
-        } 
-        \draw [line width=1.6pt*\sLW] (0,0) circle (1.15cm);
-        \foreach \angle in {0, 30, ..., 330} 
-            \draw[line width=1pt*\sLW] (\angle:0.89cm) -- (\angle:1cm);
-        \foreach \angle in {0,90,180,270}
-            \draw[line width=1.4pt*\sLW] (\angle:0.82cm) -- (\angle:1cm);
-        \draw[line width=1.6pt*\sLW] (0,0) -- (90-30*#5:0.4cm); % hour-hand
-        \draw[line width=1.3pt*\sLW] (0,0) -- (90-6*#6:0.65cm); % minute-hand
-    \end{scope}
-}
-
-\newcommand{\guy}[4]{%
-    \begin{scope}[xshift=#1,yshift=#2,scale=#3]
-        \tikzmath{
-            \sLW = #4;  % Scale line widths
-        } 
-        \draw[line width=2pt*\sLW] (0,0) circle (1cm);               % head
-        \draw[fill=black] (35:0.3cm) circle (0.08cm*\sLW);           % right eye
-        \draw[fill=black] (145:0.3cm) circle (0.08cm*\sLW);          % left eye
-        \draw[line width=2pt*\sLW] ([shift={+(0cm,0cm)}]245:0.5cm) arc (245:295:0.5cm);
-        
-        \draw[line width=2pt*\sLW] (0,-1cm) -- ++(-90:2.25cm);       % body 
-        \draw[line width=2pt*\sLW] (0,-2cm) -- ++(30:1.5cm);         % right arms
-        \draw[line width=2pt*\sLW] (0,-2cm) -- ++(150:1.5cm);        % left arms
-        \draw[line width=2pt*\sLW] (0,-3.25cm) -- ++(-60:1.5cm);     % rights leg
-        \draw[line width=2pt*\sLW] (0,-3.25cm) -- ++(240:1.5cm);     % left leg
-    \end{scope}
-}
-
-\newcommand{\rail}[5]{%
-    \begin{scope}[xshift=#1, yshift=#2, scale=#3]
-        \tikzmath{
-            \sLW = #4;
-        }
-        \draw[line width=2pt*\sLW] (-0.1cm,0) -- (#5,0);
-        \draw[line width=1pt*\sLW, dashed] (0,-0.1cm) node[below]{Ziel} -- (0,2cm) ;
-    \end{scope}
-}
-
-\newcommand{\locomotive}[4]{%
-    \begin{scope}[xshift=#1, yshift=#2, scale=#3]
-        \tikzmath{
-            \sLW = #4;
-        }
-        \draw[line width=2pt*\sLW] (0,0.3cm) 
-            -- ++(6cm,  0) 
-            -- ++(0,    1.4cm) 
-            -- ++(-5cm, 0) 
-            --   (0,    0.3cm);
-        \draw[line width=2pt*\sLW] (0.5cm,0.9cm) -- ++(1.5cm,0) -- (2.0cm,1.7cm); 
-        \foreach \wheel in {1,2,3.5,4.5,5.5}{
-            \draw [line width=2pt*\sLW]([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
-        }
-    \end{scope}
-}
-
-\newcommand{\railCar}[4]{%
-    \begin{scope}[xshift=#1, yshift=#2, scale=#3]
-        \tikzmath{
-            \sLW = #4;
-        } 
-        \draw[line width=2pt*\sLW] 
-                  (0,   0.3cm) 
-            --  ++(5cm, 0)
-            --  ++(0,   1.4cm)
-            --  ++(-5cm,0)
-            --    (0,   0.3cm);
-        \foreach \wheel in {0.8,1.8,3.2,4.2}{
-            \draw [line width=2pt*\sLW]
-                ([shift={(\wheel,0.3cm)}]180:0.3cm) arc (180:360:0.3cm);
-        }
-    \end{scope}
-}
-
-\newcommand{\train}[4]{%
-    \begin{scope}[shift={++(#1,#2)}, scale=#3]
-        \rail{0}{0}{#3}{#4}{11.5cm};
-        \locomotive{0}{0}{#3}{#4}; 
-        \railCar{6.5cm*#3}{0}{#3}{#4};
-    \end{scope}
-}
-
     \begin{figure}[h]
         \centering
         \begin{tikzpicture}
@@ -484,7 +482,6 @@ cross/.default={1pt}}
 
 \end{frame}
 
-
 \begin{frame}
     \begin{itemize}
         \item   Wir definieren Zeit über \textbf{Gleichzeitigkeit}\\
@@ -492,19 +489,111 @@ cross/.default={1pt}}
             \begin{figure}[h]
                     \centering
                     \includegraphics[width = 0.9\textwidth]{gleichzeitigkeit2}\\
+                    \caption{\cite{Einstein1905}}
             \end{figure}
             \vspace{5pt}
         \item   Der Beobachter ist direkt am Ort des Ereignisses.
     \end{itemize}
 \end{frame}
 
-
 \begin{frame}
-    
-
+    \frametitle{Raumzeit}
+    \begin{figure}[h]
+        \centering
+        \begin{equation*}
+            \text{Ereignis} = 
+                \begin{pmatrix} 
+                    x\\
+                    y\\
+                    z\\
+                    t\\
+                \end{pmatrix}_{ \left\{
+                    \text{Koordinatensystem}, \textbf{ lokale ruhende Uhr}
+                                \right\}}
+        \end{equation*}
+        \begin{tikzpicture}
+            \spaceTime{-3.5cm}{0cm}{1.5}{1.5}{1.2}{x}{y}{z}{t};
+            \train{0}{0}{0.7}{0.8};
+        \end{tikzpicture}
+    \end{figure}        
 \end{frame}
 
+\begin{frame}
+    \frametitle{Aufgabe: Synchrone Uhren}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \spaceTime{-3cm}{0cm}{1.5}{1.5}{1.2}{x_A}{y_A}{z_A}{t_A};
+            \draw[line width=2pt, stealth-stealth] 
+                (-0.2cm,0) -- (2.2cm,0)
+                node[midway, above]{?};               
+            \spaceTime{3cm}{0cm}{1.5}{1.5}{1.2}{x_B}{y_B}{z_B}{t_B};
+            \visible<2->{
+            \guy{-2.5cm}{-2cm}{0.2}{0.5};
+            \node at (-2cm, -2cm) {A};
+            \guy{3.5cm}{-2cm}{0.2}{0.5};
+            \node at (4cm, -2cm) {B};
+            }
+        \end{tikzpicture}
+    \end{figure}        
+\end{frame}
 
+\begin{frame}
+    \frametitle{Aufgabe: Synchrone Uhren}
+    \begin{figure}[h]
+            \centering
+            \includegraphics[width = \textwidth]{problemSyncron}
+            \caption{\cite{Einstein1905}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Lösung: Definition}
+    \begin{itemize}
+        \item Die letztere Zeit = Die Zeit = Eine gemeinsame Zeit. 
+    \end{itemize}
+    \begin{figure}[h]
+            \centering
+            \includegraphics[width = \textwidth]{loesungSyncron}
+            \caption{\cite{Einstein1905}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \spaceTime{-3cm}{0cm}{1.5}{1.5}{1.2}{x_A}{y_A}{z_A}{t_A};
+            \spaceTime{3cm}{0cm}{1.5}{1.5}{1.2}{x_B}{y_B}{z_B}{t_B};
+            \tikzmath{
+                \xA = -2.5;
+                \xB = 4;
+                \yStart = -1.5;
+                \dY = -0.5;
+                \lD = 0.5;
+            }
+            \draw (\xA,-1.4cm) -- ++(0,-2.0);
+            \draw (\xB,-1.4cm) -- ++(0,-2.0cm);
+            % Draw distance 
+            \draw [line width = 1pt, stealth-stealth] 
+                (\xA,\yStart+\dY) 
+                -- (\xB,\yStart+\dY) 
+                node[midway, above]{$\overline{AB}$};
+            % Draw light forward
+            \draw [line width = 2pt, ->] 
+                (\xA,\yStart+\dY*2) 
+                node [label={[label distance=\lD]left:{$t_A$}}]{}
+                -- (\xB,\yStart+\dY*2) 
+                node [label={[label distance=\lD]right:{$t_B$}}]{};
+            % Draw light backward
+            \draw [line width = 2pt, ->] 
+                (\xB,\yStart+\dY*3) 
+                node [label={[label distance=\lD]right:{}}]{}
+                -- (\xA,\yStart+\dY*3) 
+                node [label={[label distance=\lD]left:{$t^{\prime}_A$}}]{};
+        \end{tikzpicture}
+    \end{figure}        
+\end{frame}
 
 \section{§2 Relativität Zeiten \& Längen}
 \begin{frame}
@@ -518,7 +607,10 @@ cross/.default={1pt}}
 \begin{frame}
 \end{frame}
 
-
+\begin{frame}{Literatur}
+    \bibliographystyle{./my_elsart-harv_engl}
+    \bibliography{./bib}
+\end{frame}
 
 \end{document}
  
@@ -526,6 +618,7 @@ cross/.default={1pt}}
  
  
  
+
 
 
 
