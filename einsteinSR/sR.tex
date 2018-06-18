@@ -1120,7 +1120,7 @@ Interpretation:
 \end{frame}
 
 \begin{frame}
-    Synchronisationsbedingung:
+    Synchronisationsbedingung in x-Richtung:
     \begin{align*}
         \tfrac{1}{2}
             \left(
@@ -1128,11 +1128,126 @@ Interpretation:
                 + \tau \left( 0,0,0,t + \tfrac{x^\prime}{V-v} + \tfrac{x^\prime}{V+v} \right)
             \right)
         &=
-            \tau \left( x^\prime,0,0,t+\tfrac{x^\prime}{V-v}  \right)
+            \tau \left( x^\prime,0,0,t+\tfrac{x^\prime}{V-v}  \right)\\
+        %%%
+        \textcolor{green}{\tfrac{1}{2}}\left[
+            \frac{\partial \tau}{\partial t} \textcolor{green}{t} 
+            +\frac{\partial \tau}{\partial t} \left(
+                \textcolor{green}{t} + x^\prime \left( 
+                    \tfrac{1}{V-v} + \tfrac{1}{V+v}
+                \right)
+            \right)
+        \right]
+        &=
+        \frac{\partial \tau}{\partial x^\prime} x^\prime 
+        +\frac{\partial \tau}{\partial t}\left(
+            \textcolor{green}{t}+\tfrac{x^\prime}{V-v}
+        \right)\\
+        %%%
+        \tfrac{1}{2}
+        \frac{\partial \tau}{\partial t} \left(
+            \tfrac{1}{V-v} + \tfrac{1}{V+v}
+        \right)\textcolor{green}{x^\prime}
+        &=
+        \left(
+            \frac{\partial \tau}{\partial x^\prime} 
+            +\frac{\partial \tau}{\partial t}
+            \tfrac{1}{V-v}
+        \right)\textcolor{green}{x^\prime}\\
+        %%%
+        \tfrac{1}{2}
+        \frac{\partial \tau}{\partial t} \left(
+            \tfrac{V+v+V-v}{V^2-v^2}
+        \right)
+        &=
+        \frac{\partial \tau}{\partial x^\prime} 
+        +\frac{\partial \tau}{\partial t}
+        \tfrac{V+v}{V^2-v^2}
     \end{align*}
+    \begin{equation*}
+        \boxed{
+            \frac{\partial \tau}{\partial x^\prime} 
+        }
+        =
+        -\tfrac{v}{V^2-v^2}
+        \boxed{
+            \frac{\partial \tau}{\partial t} 
+        }
+    \end{equation*}
+Wir kennen nun den Koeffizienten 
+            $\frac{\partial \tau}{\partial x^\prime}$ 
+des Ansatzes als Funktion des Koeffizienten
+            $\frac{\partial \tau}{\partial t}$
 \end{frame}
 
+\begin{frame}
+    Aus den Synchronisationsbedingungen in y-Richtung folgt:
+    \begin{equation*}
+        \boxed{
+            \frac{\partial \tau}{\partial y} 
+        }
+        =
+            0
+    \end{equation*}
+    Aus den Synchronisationsbedingungen in z-Richtung folgt:
+    \begin{equation*}
+        \boxed{
+            \frac{\partial \tau}{\partial z} 
+        }
+        =
+            0
+    \end{equation*}
+\end{frame}
 
+\begin{frame}
+    Wir setzen 
+        $\frac{\partial \tau}{\partial t}$
+    als Funktion der Geschwindigkeit mit 
+        $\frac{\partial \tau}{\partial t} = a(v)$
+    an.\\\vspace{20pt}
+    Mit
+    \begin{equation*}
+        \boxed{
+            \frac{\partial \tau}{\partial x^\prime} 
+        }
+        =
+        -\tfrac{v}{V^2-v^2}
+        \boxed{
+            \frac{\partial \tau}{\partial t} 
+        }
+    \end{equation*}
+    folgt für den Ansatz:
+    \begin{align*}
+        \tau    \left( x^\prime, y, z, t\right)
+        &=
+        \frac{\partial \tau}{\partial x^\prime} x^\prime
+        &&+
+        \frac{\partial \tau}{\partial y} y
+        &&+
+        \frac{\partial \tau}{\partial z} z
+        &&+
+        \frac{\partial \tau}{\partial t} t\\
+        %%%
+        &=
+        \left( 
+            -\tfrac{v}{V^2-v^2}
+        \right) a\left( v \right) x^\prime
+        &&+
+        0 
+        &&+
+        0 
+        &&+
+        a\left( v \right) t 
+    \end{align*}
+    \begin{align*}
+        \tau    \left( x^\prime, y, z, t\right)
+        =
+        a\left( v \right) 
+        \left( 
+            t-\tfrac{v}{V^2-v^2} x^\prime
+        \right)
+    \end{align*}
+\end{frame}
 
 \section{§4 Bedeutung}
 \begin{frame}
