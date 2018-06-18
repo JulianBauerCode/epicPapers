@@ -22,14 +22,17 @@
 \usepackage{longtable}
 \usepackage{latexsym}
 \usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage[square,authoryear]{natbib}%square oder round
 \usepackage{palatino}
-\usepackage{color}
+\usepackage{xcolor}
 
 \usepackage[per-mode=symbol,decimalsymbol=comma]{siunitx}
 \usepackage{caption}
+\captionsetup[figure]{labelformat=empty} %Remove "Abbildung"
+
 \usepackage{import}
 \usepackage{multicol}
 \usepackage{epsfig}
@@ -201,6 +204,31 @@ cross/.default={1pt}}
     \end{scope}
 }
 
+\newcommand{\boxedBasis}[6]{%
+    %1 label x-axis
+    %2 label y-axis
+    %3 label z-axis
+    %4 label box 
+    %5 scaleLineWidth
+    %6 scaleFont
+    \draw[line width=1pt*#5,->] (0,0)--(1,0)
+        node[transform shape, scale=#6, anchor=north]      {#1};
+
+    \draw[line width=1pt*#5,->] (0,0)--(0.5,0.5)
+        node[transform shape, scale=#6, anchor=west]       {#2};
+
+    \draw[line width=1pt*#5,->] (0,0)--(0,1)
+        node[transform shape, scale=#6, anchor=east]       {#3};
+
+    \tikzmath{\offset=0.6;}
+
+    \draw[line width=1pt*#5, draw=black] 
+        (-\offset, -\offset) rectangle 
+        ( 1+0.5*\offset, 1+0.5*\offset) 
+        node[   midway, 
+                label={[label distance=0.8cm, transform shape]0:{#4}}]{};
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title
 \begin{document}
@@ -255,7 +283,6 @@ cross/.default={1pt}}
 	\end{itemize}
 \end{frame}
 
-
 \begin{frame}
 	\href{https://pep20.org/}{PEP20.org} folgend 
     \begin{figure}[h]
@@ -289,12 +316,13 @@ cross/.default={1pt}}
         \end{itemize}
 	\end{enumerate}
 \end{frame}
-
-
-
 \section{§1 Gleichzeitigkeit}
+
 \begin{frame}
-    \frametitle{Raum}
+    \tableofcontents[hideallsubsections,currentsection,currentsubsection]
+\end{frame}
+
+\begin{frame}{Raum}
     \begin{itemize}
         \item Das \textbf{\glqq{}ruhende System\grqq{}:}
         \begin{itemize}
@@ -465,10 +493,9 @@ cross/.default={1pt}}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}{Gleichzeitigkeit}[fragile]
     %fragile-option is needed if macros are to be executed in beamer frame
     % see  https://tex.stackexchange.com/a/325472
-    \frametitle{Gleichzeitigkeit}
     \begin{figure}[h]
         \centering
         \begin{tikzpicture}
@@ -496,8 +523,7 @@ cross/.default={1pt}}
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Raumzeit}
+\begin{frame}{Raumzeit}
     \begin{figure}[h]
         \centering
         \begin{equation*}
@@ -518,8 +544,7 @@ cross/.default={1pt}}
     \end{figure}        
 \end{frame}
 
-\begin{frame}
-    \frametitle{Aufgabe: Synchrone ruhende Uhren}
+\begin{frame}{Aufgabe: Synchrone ruhende Uhren}
     \begin{figure}[h]
         \centering
         \begin{tikzpicture}
@@ -538,8 +563,7 @@ cross/.default={1pt}}
     \end{figure}        
 \end{frame}
 
-\begin{frame}
-    \frametitle{Aufgabe: Synchrone ruhende Uhren}
+\begin{frame}{Aufgabe: Synchrone ruhende Uhren}
     \begin{figure}[h]
             \centering
             \includegraphics[width = \textwidth]{problemSyncron}
@@ -547,8 +571,7 @@ cross/.default={1pt}}
     \end{figure}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Lösung: Definition}
+\begin{frame}{Lösung: Definition}
     \begin{itemize}
         \item Die letztere Zeit = Die Zeit = Eine gemeinsame Zeit. 
     \end{itemize}
@@ -559,9 +582,8 @@ cross/.default={1pt}}
     \end{figure}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Synchrone ruhende Uhren}
     \begin{figure}[h]
-        \frametitle{Synchrone ruhende Uhren}
         \centering
         \begin{tikzpicture}
             \spaceTime{-3cm}{0cm}{1.5}{1.5}{1.2}{x_A}{y_A}{z_A}{t_A};
@@ -608,8 +630,7 @@ cross/.default={1pt}}
     }
 \end{frame}
 
-\begin{frame}
-    \frametitle{Die Zeit}
+\begin{frame}{Die Zeit}
     \begin{figure}[h]
             \centering
             \includegraphics[width = \textwidth]{dieZeit}
@@ -618,14 +639,507 @@ cross/.default={1pt}}
 \end{frame}
 
 \section{§2 Relativität Zeiten \& Längen}
+
 \begin{frame}
+    \tableofcontents[hideallsubsections,currentsection,currentsubsection]
+\end{frame}
+
+\begin{frame}{Wo sind wir jetzt?}
+    \begin{itemize}
+        \item Bisher:
+            \begin{itemize}
+                \item Definition von Gleichzeitigkeit
+            \end{itemize}
+        \vspace{5pt}
+        \item Jetzt:
+            \begin{itemize}
+                \item Zwei  Prinzipien und deren Folgen für:
+                    \begin{center}
+                        Die Relativität von Längen und Zeiten
+                    \end{center}
+            \end{itemize}
+        \vspace{5pt}
+        \item Danach:
+            \begin{itemize}
+                \item Formeln
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Relativitätsprinzip}
+    \begin{figure}[h]
+            \centering
+            \includegraphics[width = \textwidth]{relativitaet}
+            \caption{\cite{Einstein1905}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{tikzpicture}
+        \begin{scope}[xshift=0cm, yshift=0cm, rotate=30]
+            \boxedBasis{$x_1$}
+                        {$y_1$}
+                        {$z_1$}
+                        {$\rightarrow \boldsymbol{v_1}=\text{konstant}$}
+                        {1}
+                        {1};
+        \end{scope}
+        \begin{scope}[xshift=5cm, yshift=0cm, rotate=10]
+            \boxedBasis{$x_2$}
+                        {$y_2$}
+                        {$z_2$}
+                        {$\rightarrow \boldsymbol{v_2}=\text{konstant}$}
+                        {1}
+                        {1};
+        \end{scope}
+        \begin{scope}[xshift=3cm, yshift=-3cm, rotate=-20]
+            \boxedBasis{$x_3$}{$y_3$}{$z_3$}{}{1}{1};
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Konstanz der Lichtgeschwindigkeit}
+    \begin{figure}[h]
+            \centering
+            \includegraphics[width = \textwidth]{konstanzLichtgeschwindigkeit}
+            \caption{\cite{Einstein1905}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Konstanz der Lichtgeschwindigkeit}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = \textwidth]{konstGeschwRuhend}
+        \caption{Ausbreitungsgeschwindigkeit des Lichtes einer \textbf{ruhenden} Lichtquelle}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Konstanz der Lichtgeschwindigkeit}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = \textwidth]{konstGeschwBewegt}
+        \caption{Ausbreitungsgeschwindigkeit des Lichtes einer \textbf{bewegten} Lichtquelle}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Bewegte Uhr synchron im ruhenden System}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = 0.8\textwidth]{synchronRuhend}
+        \caption{\textbf{SR} $=$ synchron im ruhenden System}
+    \end{figure}
+\begin{itemize}
+    \item Die Zeit einer bewegten Uhr (SR)  entspricht der Zeit einer ruhenden synchronen Uhr am aktuellen Ort der bewegten Uhr.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Relativität von Zeiten}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = 0.8\textwidth]{relZeitOhne}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Relativität von Zeiten}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = 0.8\textwidth]{relZeitMit}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = 0.7\textwidth]{relZeitMit}
+    \end{figure}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \tikzmath{
+                \xA = -2.5;
+                \xB = 4;
+                \yStart = -1.5;
+                \dY = -0.5;
+                \lD = 0.5;
+            }
+            \draw (\xA,\yStart+\dY) -- ++(0,-1.5);
+            \draw (\xB,\yStart+\dY) -- ++(0,-1.5cm);
+            % Draw light forward
+            \draw [line width = 2pt, ->,red] 
+                (\xA,\yStart+\dY*2) 
+                node [label={[label distance=\lD,black]left:{$t_A$}}]{}
+                -- (\xB,\yStart+\dY*2) 
+                node [label={[label distance=\lD,black]right:{$t_B$}}]{};
+            % Draw light backward
+            \draw [line width = 2pt, ->,red] 
+                (\xB,\yStart+\dY*3) 
+                node [label={[label distance=\lD,black]right:{}}]{}
+                -- (\xA,\yStart+\dY*3) 
+                node [label={[label distance=\lD,black]left:{$t^{\prime}_A$}}]{};
+        \end{tikzpicture}
+    \end{figure}
+    \only<2->{
+        Synchronisationsbedingung:       
+        \begin{align*}
+            t_B - t_A               &= t^{\prime}_A - t_B\\
+            \visible<3->{
+                \frac{r_{AB}}{V-v}  &= \frac{r_{AB}}{V+v} 
+            }
+        \end{align*}
+    }
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = 0.7\textwidth]{relZeitMit}
+    \end{figure}
+        Synchronisationsbedingung:       
+        \begin{align*}
+            t_B - t_A           &= t^{\prime}_A - t_B\\
+            \frac{r_{AB}}{V-v}  &= \frac{r_{AB}}{V+v} 
+        \end{align*}
+Interpretation:
+\begin{itemize}
+    \item Bewegte Beobachter sehen zwei bewegte Uhren (\textbf{SR}), nicht synchron.
+    \visible<2->{
+        \item Gleichzeitigkeit ist relativ 
+        \visible<3->{
+            $=$ \textbf{Zeit ist relativ}
+        }
+    }
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Relativität von Längen}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[h]
+                \centering
+                \includegraphics[height = 0.6\textwidth]{relLaengeRuhend}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[h]
+                \centering
+                \includegraphics[height = 0.6\textwidth]{relLaengeBewegt}
+            \end{figure}
+        \end{column}
+    \end{columns}
+    \visible<2->{
+        \begin{itemize}
+            \item A.E.: Relativitätsprinzip:
+                \begin{equation*}
+                    l_{\text{ruhend}} = l_{\text{bewegt}}
+                \end{equation*}
+            \vspace{-20pt}
+            \visible<3->{
+                \item \textbf{Aber}: Die Länge des bewegten Stabes im ruhenden System $\neq$ $l$ 
+            }
+        \end{itemize} 
+    }
+\end{frame}
+
+\begin{frame}{Relativität von Längen}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{relLaengenB1}
+    \end{figure}
+    \vspace{-10pt}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{relLaengenB2}
+        \caption{\cite{Einstein1905}}
+    \end{figure}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.7\textwidth]{relLaengeBewegtRuhend}
+    \end{figure}
 \end{frame}
 
 \section{§3 Transformationen}
+\begin{frame}{Translation entlang der x-Achse}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\textwidth]{translationX1}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Zwei Koordinatensysteme / Raumzeiten}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.5\textwidth]{translationX1}
+    \end{figure}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{align*}
+                \begin{pmatrix}
+                    x\\y\\z\\t
+                \end{pmatrix}_{K}
+            \end{align*}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{align*}
+                \begin{pmatrix}
+                    \xi = \text{xi}\\ 
+                    \eta = \text{eta}\\ 
+                    \zeta =\text{zeta}\\ 
+                    \tau = \text{tau}
+                \end{pmatrix}_{k}
+            \end{align*}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Ein im bewegten System ruhender Punkt}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.3\textwidth]{translationX2T0}
+        \hspace{30pt}
+        \includegraphics[height=0.3\textwidth]{translationX2T}
+    \end{figure}
+    \begin{equation*}
+        x(t)        = v\cdot t + x^\prime \quad \quad| -v \cdot t 
+    \end{equation*}
+    \begin{equation*}
+        \boxed{
+            x^\prime    = x(t) - v \cdot t
+        }
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Alternative Darstellung in K}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.25\textwidth]{translationX2T}
+    \end{figure}
+    \begin{equation*}
+        \boxed{
+            x^\prime    = x(t) - v \cdot t
+        }
+    \end{equation*}
+    \begin{columns}
+        \begin{column}{0.1\textwidth}
+            \begin{align*}
+                \begin{pmatrix}
+                    x^\prime\\y\\z\\t
+                \end{pmatrix}_{K}
+            \end{align*}
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            statt
+        \end{column}
+        \begin{column}{0.1\textwidth}
+            \begin{align*}
+                \begin{pmatrix}
+                    x\\y\\z\\t
+                \end{pmatrix}_{K}
+            \end{align*}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Synchrone bewegte Uhren}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height = 0.3\textwidth]{synchronBewegt}
+    \end{figure}
+    \vspace{-20pt}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \tikzmath{
+                \xA = -2.5;
+                \xB = 4;
+                \yStart = -1.5;
+                \dY = -0.5;
+                \lD = 0.5;
+            }
+            \draw (\xA,\yStart+\dY) -- ++(0,-1.5);
+            \draw (\xB,\yStart+\dY) -- ++(0,-1.5cm);
+            % Draw light forward
+            \draw [line width = 2pt, ->,red] 
+                (\xA,\yStart+\dY*2) 
+                node [label={[label distance=\lD,black]left:{$\tau_0$}}]{}
+                -- (\xB,\yStart+\dY*2) 
+                node [label={[label distance=\lD,black]right:{$\tau_1$}}]{};
+            % Draw light backward
+            \draw [line width = 2pt, ->,red] 
+                (\xB,\yStart+\dY*3) 
+                node [label={[label distance=\lD,black]right:{}}]{}
+                -- (\xA,\yStart+\dY*3) 
+                node [label={[label distance=\lD,black]left:{$\tau_2$}}]{};
+        \end{tikzpicture}
+    \end{figure}
+    \only<2->{
+        Synchronisationsbedingung:       
+        \begin{align*}
+            \tau_2 - \tau_1     &=  \tau_1 + \tau_0             &&| + \tau_0 ; +\tau_1\\
+            \tau_2 + \tau_0     &=  2\cdot \tau_1               &&| :2\\
+            \Aboxed{
+            \tfrac{1}{2}\left(\tau_1 - \tau_0\right)     &=  \tau_1
+            }
+        \end{align*}
+    }
+\end{frame}
+
+\begin{frame}{Ziel:}
+    \begin{itemize}
+        \item Bestimme:
+    \end{itemize}
+\begin{equation*}
+    \begin{pmatrix}
+        \xi \\ 
+        \eta \\ 
+        \zeta\\ 
+        \tau 
+    \end{pmatrix}
+=
+    \begin{pmatrix}
+        \xi     \left( x^\prime, y, z, t\right) \\ 
+        \eta    \left( x^\prime, y, z, t\right) \\  
+        \zeta   \left( x^\prime, y, z, t\right) \\  
+        \tau    \left( x^\prime, y, z, t\right) \\  
+    \end{pmatrix}
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Ansatz für $\tau$}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=0.12\textwidth]{linear}
+        \caption{\cite{Einstein1905}}
+    \end{figure}
+    Daraus folgt für $\tau$:
+    \begin{equation*}
+        \tau    \left( x^\prime, y, z, t\right)
+        =
+        \frac{\partial \tau}{\partial x^\prime} x^\prime
+        +
+        \frac{\partial \tau}{\partial y} y
+        +
+        \frac{\partial \tau}{\partial z} z
+        +
+        \frac{\partial \tau}{\partial t} t
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Die Zeit $\tau$ im bewegten System}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height = 0.2\textwidth]{synchronBewegt}\\
+        \begin{tikzpicture}[scale=0.5]
+            \tikzmath{
+                \xA = -2.5;
+                \xB = 4;
+                \yStart = -1.5;
+                \dY = -0.5;
+                \lD = 0.5;
+            }
+            \draw (\xA,\yStart+\dY) -- ++(0,-1.5);
+            \draw (\xB,\yStart+\dY) -- ++(0,-1.5cm);
+            % Draw light forward
+            \draw [line width = 2pt, ->,red] 
+                (\xA,\yStart+\dY*2) 
+                node [label={[label distance=\lD,black]left:{$\tau_0$}}]{}
+                -- (\xB,\yStart+\dY*2) 
+                node [label={[label distance=\lD,black]right:{$\tau_1$}}]{};
+            % Draw light backward
+            \draw [line width = 2pt, ->,red] 
+                (\xB,\yStart+\dY*3) 
+                node [label={[label distance=\lD,black]right:{}}]{}
+                -- (\xA,\yStart+\dY*3) 
+                node [label={[label distance=\lD,black]left:{$\tau_2$}}]{};
+        \end{tikzpicture}
+    \end{figure}
+    Synchronisationsbedingung:
+    \begin{align*}
+        \tfrac{1}{2}\left(\tau_1 - \tau_0\right)     &=  \tau_1\\
+        \tfrac{1}{2}\left(
+            \tau \left( 0,0,0,t  \right)
+            + \tau \left( 0,0,0,t + \tfrac{x^\prime}{V-v} + \tfrac{x^\prime}{V+v} \right)
+        \right)
+            &=
+            \tau \left( x^\prime,0,0,t+\tfrac{x^\prime}{V-v}  \right)
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Die Zeit $\tau$ im bewegten System}
+    Mit dem Ansatz 
+    \begin{equation*}
+        \tau    \left( x^\prime, y, z, t\right)
+        =
+        \frac{\partial \tau}{\partial x^\prime} x^\prime
+        +
+        \frac{\partial \tau}{\partial y} y
+        +
+        \frac{\partial \tau}{\partial z} z
+        +
+        \frac{\partial \tau}{\partial t} t
+    \end{equation*}
+    gilt für Bestandteile der Synchronisationsbedingung:
+    \begin{align*}
+            \tau \left( 0,0,0,t  \right) 
+                &=
+                    \frac{\partial \tau}{\partial x^\prime} 0
+                    +
+                    \frac{\partial \tau}{\partial y} 0
+                    +
+                    \frac{\partial \tau}{\partial z} 0
+                    +
+                    \frac{\partial \tau}{\partial t} \textcolor{red}{t}\\
+            \tau \left( 0,0,0,t + \tfrac{x^\prime}{V-v} + \tfrac{x^\prime}{V+v} \right)
+                &= 
+                    \frac{\partial \tau}{\partial x^\prime} 0
+                    +
+                    \frac{\partial \tau}{\partial y} 0
+                    +
+                    \frac{\partial \tau}{\partial z} 0
+                    +
+                    \frac{\partial \tau}{\partial t} 
+                        \left(
+                            \textcolor{red}{
+                                t + \tfrac{x^\prime}{V-v} + \tfrac{x^\prime}{V+v} 
+                            }
+                        \right)\\
+            \tau \left( x^\prime,0,0,t+\tfrac{x^\prime}{V-v}  \right)
+                &= 
+                    \frac{\partial \tau}{\partial x^\prime} \textcolor{red}{x^\prime}
+                    +
+                    \frac{\partial \tau}{\partial y} 0
+                    +
+                    \frac{\partial \tau}{\partial z} 0
+                    +
+                    \frac{\partial \tau}{\partial t}
+                        \left(
+                            \textcolor{red}{
+                                t+\tfrac{x^\prime}{V-v}
+                            }
+                        \right)
+    \end{align*}
+\end{frame}
+
+\begin{frame}
+    Synchronisationsbedingung:
+    \begin{align*}
+        \tfrac{1}{2}
+            \left(
+                \tau \left( 0,0,0,t  \right)
+                + \tau \left( 0,0,0,t + \tfrac{x^\prime}{V-v} + \tfrac{x^\prime}{V+v} \right)
+            \right)
+        &=
+            \tau \left( x^\prime,0,0,t+\tfrac{x^\prime}{V-v}  \right)
+    \end{align*}
+\end{frame}
+
+
+
+\section{§4 Bedeutung}
 \begin{frame}
 \end{frame}
 
-\section{§4 Bedeutung}
+\appendix
+\section{appendix}
 \begin{frame}
 \end{frame}
 
@@ -640,6 +1154,26 @@ cross/.default={1pt}}
  
  
  
+
+% \begin{frame}{Konstanz der Lichtgeschwindigkeit}
+%     \begin{columns}
+%         \begin{column}{-1.5\textwidth}
+%             \begin{figure}[h]
+%                 \centering
+%                 \includegraphics[width = \textwidth]{konstGeschwRuhend}
+%                 \caption{\cite{Einstein1904}}
+%             \end{figure}
+%         \end{column}
+%         \begin{column}{-1.5\textwidth}
+%             \begin{figure}[h]
+%                 \centering
+%                 \includegraphics[width = \textwidth]{konstGeschwBewegt}
+%                 \caption{\cite{Einstein1904}}
+%             \end{figure}
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+
 
 
 
