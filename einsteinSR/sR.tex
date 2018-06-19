@@ -45,7 +45,8 @@
 \setlength{\TPVertModule}{\TPHorizModule}
 
 \usepackage{appendixnumberbeamer}
-
+%\usepackage{xparse}
+%\usepackage{physics}
 \usepackage{tikz}
 \usetikzlibrary{math,fit,arrows,shapes,shapes.misc,positioning,patterns}
 \usepackage{environ}
@@ -229,9 +230,10 @@ cross/.default={1pt}}
                 label={[label distance=0.8cm, transform shape]0:{#4}}]{};
 }
 
+\begin{document}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title
-\begin{document}
 \title{
         Albert Einsteins \glqq{}Spezielle Relativitätstheorie\grqq{} 
         einfach präsentiert
@@ -244,26 +246,26 @@ cross/.default={1pt}}
 \institute{Karlsruhe Institute of Technology (KIT)}
 \date[]{13.06.2018}
 
+%Titlepage
 \begin{frame}
     \titlepage
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Table of contents
 \begin{frame}
     \tableofcontents
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Einleitung}
 \begin{frame}
     \tableofcontents[hideallsubsections,currentsection,currentsubsection]
 \end{frame}
 
 \begin{frame}
-	\frametitle{Motivation}
+    \frametitle{Motivation}
     \begin{itemize}
-    	\item   Zur damaligen Zeit versuchten theoretische Physiker die Welt durch 
+        \item   Zur damaligen Zeit versuchten theoretische Physiker die Welt durch 
                 Einführung eines \textbf{absolut ruhenden Systems} zu erklären.
                 Dieses absolut ruhende System wurde \textbf{Lichtäther} genannt und
                 konnte nie nachgewiesen werden.
@@ -271,20 +273,20 @@ cross/.default={1pt}}
         \item   \textbf{Unbefriedigende Formulierungen} der damaligen Grundgleichungen 
                 der Elektrodynamik.
         \begin{itemize}
-			\item   Beispiel:\\
+            \item   Beispiel:\\
                         Eine Bewegung eines elektrischen Leiters relativ zu einem
                         Magneten führt zu elektrischen Strömen im Leiter.\\
                         Damalige Erklärungen unterscheiden \textbf{zwei Fälle}:
                         \begin{enumerate}
-                        	\item Der Leiter steht fest.
+                            \item Der Leiter steht fest.
                             \item Der Magnet steht fest
                         \end{enumerate}
-		\end{itemize}
-	\end{itemize}
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
-	\href{https://pep20.org/}{PEP20.org} folgend 
+    \href{https://pep20.org/}{PEP20.org} folgend 
     \begin{figure}[h]
             \centering
             \includegraphics[width = 0.7\textwidth]{pep20}\\
@@ -977,7 +979,7 @@ Interpretation:
             \tau_2 - \tau_1     &=  \tau_1 + \tau_0             &&| + \tau_0 ; +\tau_1\\
             \tau_2 + \tau_0     &=  2\cdot \tau_1               &&| :2\\
             \Aboxed{
-            \tfrac{1}{2}\left(\tau_1 - \tau_0\right)     &=  \tau_1
+            \tfrac{1}{2}\left(\tau_1 - \tau_0\right)     &=  \tau_2
             }
         \end{align*}
     }
@@ -987,21 +989,21 @@ Interpretation:
     \begin{itemize}
         \item Bestimme:
     \end{itemize}
-\begin{equation*}
-    \begin{pmatrix}
-        \xi \\ 
-        \eta \\ 
-        \zeta\\ 
-        \tau 
-    \end{pmatrix}
-=
-    \begin{pmatrix}
-        \xi     \left( x^\prime, y, z, t\right) \\ 
-        \eta    \left( x^\prime, y, z, t\right) \\  
-        \zeta   \left( x^\prime, y, z, t\right) \\  
-        \tau    \left( x^\prime, y, z, t\right) \\  
-    \end{pmatrix}
-\end{equation*}
+    \begin{equation*}
+        \begin{pmatrix}
+            \xi \\ 
+            \eta \\ 
+            \zeta\\ 
+            \tau 
+        \end{pmatrix}
+    =
+        \begin{pmatrix}
+            \xi     \left( x^\prime, y, z, t\right) \\ 
+            \eta    \left( x^\prime, y, z, t\right) \\  
+            \zeta   \left( x^\prime, y, z, t\right) \\  
+            \tau    \left( x^\prime, y, z, t\right) \\  
+        \end{pmatrix}
+    \end{equation*}
 \end{frame}
 
 \begin{frame}{Ansatz für $\tau$}
@@ -1023,6 +1025,7 @@ Interpretation:
         \frac{\partial \tau}{\partial t} t
     \end{equation*}
 \end{frame}
+
 
 \begin{frame}{Die Zeit $\tau$ im bewegten System}
     \begin{figure}[h]
@@ -1054,7 +1057,7 @@ Interpretation:
     \end{figure}
     Synchronisationsbedingung:
     \begin{align*}
-        \tfrac{1}{2}\left(\tau_1 - \tau_0\right)     &=  \tau_1\\
+        \tfrac{1}{2}\left(\tau_1 - \tau_0\right)     &=  \tau_2\\
         \tfrac{1}{2}\left(
             \tau \left( 0,0,0,t  \right)
             + \tau \left( 0,0,0,t + \tfrac{x^\prime}{V-v} + \tfrac{x^\prime}{V+v} \right)
@@ -1181,7 +1184,7 @@ des Ansatzes als Funktion des Koeffizienten
 \end{frame}
 
 \begin{frame}
-    Aus den Synchronisationsbedingungen in y-Richtung folgt:
+    Aus der Synchronisationsbedingung in y-Richtung folgt:
     \begin{equation*}
         \boxed{
             \frac{\partial \tau}{\partial y} 
@@ -1189,7 +1192,7 @@ des Ansatzes als Funktion des Koeffizienten
         =
             0
     \end{equation*}
-    Aus den Synchronisationsbedingungen in z-Richtung folgt:
+    Aus der Synchronisationsbedingung in z-Richtung folgt:
     \begin{equation*}
         \boxed{
             \frac{\partial \tau}{\partial z} 
@@ -1215,6 +1218,18 @@ des Ansatzes als Funktion des Koeffizienten
         \boxed{
             \frac{\partial \tau}{\partial t} 
         }
+        ;\quad\quad
+        \boxed{
+            \frac{\partial \tau}{\partial y} 
+        }
+        =
+            0
+        ;\quad\quad
+        \boxed{
+            \frac{\partial \tau}{\partial z} 
+        }
+        =
+            0
     \end{equation*}
     folgt für den Ansatz:
     \begin{align*}
@@ -1249,8 +1264,391 @@ des Ansatzes als Funktion des Koeffizienten
     \end{align*}
 \end{frame}
 
+\begin{frame}{Aktueller Stand}
+    \begin{align*}
+        \begin{pmatrix}
+            \xi \\ 
+            \eta \\ 
+            \zeta\\ 
+            \tau 
+        \end{pmatrix}
+   &=
+        \begin{pmatrix}
+            ? \\ 
+            ? \\ 
+            ? \\ 
+            a\left( v \right) 
+                \left( 
+                    t-\tfrac{v}{V^2-v^2} x^\prime
+                \right)
+        \end{pmatrix}\\
+%   \visible<2->{ 
+%   &=
+%        \begin{bmatrix}
+%            ?   &?   &?    &? \\ 
+%            ?   &?   &?    &? \\ 
+%            ?   &?   &?    &? \\ 
+%            -\tfrac{v\cdot a\left( v \right)}{V^2-v^2} 
+%            &0
+%            &0
+%            &a\left( v \right) 
+%        \end{bmatrix}
+%        \begin{pmatrix}
+%            x^\prime\\y\\z\\t
+%        \end{pmatrix}
+%    }
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Die Koordinate $\xi$ im bewegten System}
+    \begin{itemize}
+        \item Wir kennen die Zeit $\tau$ im bewegten System
+        \item Ein Lichtstrahl breitet sich mit Lichtgeschwindigkeit aus
+        \item Es gilt somit im bewegten System:
+            \begin{align*}
+                \xi     &=  V\tau\\
+                \xi     &=  V \cdot a\left(v\right) \left(
+                                t-\frac{v}{V^2-v^2} x^\prime
+                            \right)
+            \end{align*}
+        \item Für die Zeit im ruhenden System gilt:
+            \begin{align*}
+                t   =   \frac{x^\prime}{V-v}
+            \end{align*}
+            da das bewegte System versucht dem Lichtstrahl davon zu laufen. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Die Koordinate $\xi$ im bewegten System}
+    \begin{itemize}
+        \item Aus
+            \begin{align*}
+                \xi     &=  V \cdot a\left(v\right) \left(
+                                t-\frac{v}{V^2-v^2} x^\prime
+                            \right)\\
+                t   &=   \frac{x^\prime}{V-v}
+            \end{align*}
+            folgt
+            \begin{align*}
+                \xi     &=   a\left(v\right) 
+                                \frac{V^2}{V^2-v^2} x^\prime
+            \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Aktueller Stand}
+    \begin{align*}
+        \begin{pmatrix}
+            \xi \\ 
+            \eta \\ 
+            \zeta\\ 
+            \tau 
+        \end{pmatrix}
+    &=
+        \begin{pmatrix}
+            a\left(v\right) \frac{V^2}{V^2-v^2} x^\prime\\
+            ? \\ 
+            ? \\ 
+            a\left( v \right) 
+                \left( 
+                    t-\tfrac{v}{V^2-v^2} x^\prime
+                \right)
+        \end{pmatrix}\\
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Geschwindigkeit eines Lichtstrahles entlang $\eta$ und $\zeta$}
+    \begin{figure}[h]
+            \centering
+            \includegraphics[width = 0.7\textwidth]{geschwEta}
+    \end{figure}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[h]
+                    \centering
+                    \includegraphics[width = 0.8\textwidth]{geschwEtaVektor}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}  %%<--- here
+            \begin{align*}
+                \left\| \mathbf{V} \right\|
+                &=
+                \left\|
+                    \begin{pmatrix}
+                        V_{\xi}\\
+                        V_{\eta}
+                    \end{pmatrix}
+                \right\|
+                =
+                \sqrt{V^2_{\xi}+V^2_{\eta}}\\
+                V
+                &=
+                \sqrt{v^2+V^2_{\eta}}\\
+                \Aboxed{
+                    V_{\eta} 
+                    &=
+                    V_{\zeta} 
+                    =
+                    \sqrt{V^2-v^2}
+                }
+            \end{align*}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Die Koordinate $\eta$ im bewegten System}
+    \begin{itemize}
+        \item Wir kennen die Zeit $\tau$ im bewegten System
+        \item Ein Lichtstrahl breitet sich mit Lichtgeschwindigkeit aus
+        \item Es gilt somit im bewegten System:
+            \begin{align*}
+                \eta     &=  V\tau\\
+                \eta     &=  V \cdot a\left(v\right) \left(
+                                t-\frac{v}{V^2-v^2} x^\prime
+                            \right)
+            \end{align*}
+        \item Für die Zeit im ruhenden System und $x^\prime$ gilt:
+            \begin{align*}
+                t   =   \frac{y}{
+                            \sqrt{V^2-v^2}
+                        }
+                \quad\quad
+                x^\prime = 0
+            \end{align*}
+        \item Da sich ein Lichtstrahl aus dem ruhenden System betrachtet 
+                entlang der $\eta$-Achse ausbreitet mit
+            \begin{align*}
+                    V_{\eta} 
+                    =
+                    \sqrt{V^2-v^2}
+            \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Die Koordinate $\eta$ im bewegten System}
+    \begin{itemize}
+        \item Aus
+            \begin{align*}
+                \eta     &=  V \cdot a\left(v\right) \left(
+                                t-\frac{v}{V^2-v^2} x^\prime
+                            \right)
+                \\
+                t  
+                &=   \frac{y}{
+                            \sqrt{V^2-v^2}
+                        }
+                \\
+                x^\prime 
+                &= 0
+            \end{align*}
+            folgt
+            \begin{align*}
+                \eta     &=   a\left(v\right) 
+                                \frac{V}{\sqrt{V^2-v^2}} y
+            \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Die Koordinate $\zeta$ im bewegten System}
+    \begin{itemize}
+        \item Analog folgt für $\zeta$
+            \begin{align*}
+                \zeta     &=   a\left(v\right) 
+                                \frac{V}{\sqrt{V^2-v^2}} z
+            \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Aktueller Stand}
+    \begin{align*}
+        \begin{pmatrix}
+            \xi \\ 
+            \eta \\ 
+            \zeta\\ 
+            \tau 
+        \end{pmatrix}
+    &=
+        \begin{pmatrix*}[l]
+            a\left(v\right) \frac{V^2}{V^2-v^2} x^\prime\\
+            a\left(v\right) 
+                                \frac{V}{\sqrt{V^2-v^2}} y\\
+            a\left(v\right) 
+                                \frac{V}{\sqrt{V^2-v^2}} z\\
+            a\left( v \right) 
+                \left( 
+                    t-\tfrac{v}{V^2-v^2} x^\prime
+                \right)
+        \end{pmatrix*}
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Schönere Darstellung}
+    \begin{itemize}
+        \item Es folgt mit
+            \begin{align*}
+                x^\prime                &= x(t) - v \cdot t\\
+                \beta                   &=\frac{1}{\sqrt{1-\left( \frac{v}{V} \right)^2}}\\
+                \varphi \left(v\right)  &= a \left(v\right)
+            \end{align*}
+    \end{itemize}
+    \begin{align*}
+        \begin{pmatrix}
+            \xi \\ 
+            \eta \\ 
+            \zeta\\ 
+            \tau 
+        \end{pmatrix}
+    &=
+        \begin{pmatrix*}[l]
+            \varphi\left(v\right)       \beta &\left(    x-vt\right)\\
+            \varphi\left(v\right)       \beta &y\\
+            \varphi\left(v\right)       \beta &z\\
+            \varphi\left(v\right)       \beta &\left( t-\frac{v}{V^2}x \right)
+        \end{pmatrix*}
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Transformation als lineare Abbildung}
+    \begin{align*}
+        \begin{pmatrix}
+            \xi \\
+            \eta \\
+            \zeta\\
+            \tau
+        \end{pmatrix}
+    &=
+    \varphi \left( v \right) \beta
+        \begin{bmatrix}
+             1
+            &
+            &
+            &-v
+            \\%%% 
+             %
+            &1
+            &
+            &
+            \\%%% 
+             %
+            &
+            &1
+            &
+            \\%%% 
+             -\frac{v}{V^2}
+            &
+            &
+            &1
+        \end{bmatrix}
+        \begin{pmatrix}
+            x\\y\\z\\t
+        \end{pmatrix}\\[30pt]
+            &\text{mit }\beta =\frac{1}{\sqrt{1-\left( \frac{v}{V} \right)^2}}\\
+            &\text{und noch zu bestimmender Funktion }\varphi \left( v \right)
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Überprüfung Konstanz der Lichtgeschwindigkeit}
+    \begin{itemize}
+        \item Erfüllt die gefundene Transformationsvorschrift des Prinzip der
+                Konstanz der Lichtgeschwindigkeit?
+        \item Die Beschreibung einer Kugelwelle vor und nach der Transformation
+                hat die Darstellungen:
+            \begin{align*}
+                x^2 &&+y^2&&+z^2&&=V^2t^2\\
+                \xi^2 &&+\eta^2&&+\zeta^2&&=V^2\tau^2\\
+            \end{align*}
+        \item Die Ausbreitungsgeschwindigkeiten in beiden Darstellungen sind identisch.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bestimmung von $\varphi(v)$ durch zwei Überlegungen}
+    \begin{enumerate}
+        \item Bewegtes System im bewegten System
+            \begin{itemize}
+                \item Forderung:
+                \begin{align*}
+                    \varphi(v) \varphi(-v) = 1
+                \end{align*}
+            \end{itemize}
+        \only<1>{
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width = 0.5\textwidth]{forderungPhi1}
+            \end{figure}
+        }
+        \only<2->{
+            \item $\varphi(v)$ skaliert Längen im bewegten System bei Beobachtung aus dem ruhenden System. Wir fordern, dass diese Skalierung unabhängig vom Vorzeichen der Geschwindigkeit ist.
+                \begin{itemize}
+                    \item Forderung:
+                        \begin{align*}
+                            \varphi(v) = \varphi(-v)
+                        \end{align*}
+                \end{itemize}
+        }
+    \end{enumerate}
+    \visible<3->{
+        \begin{itemize}
+            \item Aus den Forderungen folgt
+                \begin{align*}
+                    \varphi(v) = 1
+                \end{align*}
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Transformation als lineare Abbildung}
+    \begin{align*}
+        \begin{pmatrix}
+            \xi \\
+            \eta \\
+            \zeta\\
+            \tau
+        \end{pmatrix}
+    &=
+    \beta \left( v \right)
+        \begin{bmatrix}
+             1
+            &
+            &
+            &-v
+            \\%%% 
+             %
+            &1
+            &
+            &
+            \\%%% 
+             %
+            &
+            &1
+            &
+            \\%%% 
+             -\frac{v}{V^2}
+            &
+            &
+            &1
+        \end{bmatrix}
+        \begin{pmatrix}
+            x\\y\\z\\t
+        \end{pmatrix}\\[30pt]
+            &\text{mit }\beta \left( v \right)=\frac{1}{\sqrt{1-\left( \frac{v}{V} \right)^2}}
+    \end{align*}
+\end{frame}
+
 \section{§4 Bedeutung}
-\begin{frame}
+\begin{frame}{Bedeutung}
+    \begin{itemize}
+        \item Zeitdilatation
+        \item Längenkontraktion / Lorentztransformation
+        \item GPS-Navigation
+        \item Minkowski-Diagramme
+        \item Allgemeine Relativitätstheorie
+        \item ...
+    \end{itemize}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height = 0.3\textwidth]{minko}
+        \caption{\href{https://de.wikipedia.org/wiki/Minkowski-Diagramm}{Wikipedia}}
+    \end{figure}
 \end{frame}
 
 \appendix
@@ -1264,11 +1662,7 @@ des Ansatzes als Funktion des Koeffizienten
 \end{frame}
 
 \end{document}
- 
- 
- 
- 
- 
+
 
 % \begin{frame}{Konstanz der Lichtgeschwindigkeit}
 %     \begin{columns}
@@ -1292,7 +1686,52 @@ des Ansatzes als Funktion des Koeffizienten
 
 
 
-
+% \begin{frame}{Ziel (linear):}
+%     \begin{itemize}
+%         \item Bestimme:
+%     \end{itemize}
+%     \begin{align*}
+%         \begin{pmatrix}
+%             \xi \\ 
+%             \eta \\ 
+%             \zeta\\ 
+%             \tau 
+%         \end{pmatrix}
+%     &=
+%         \begin{pmatrix}
+%             \xi     \left( x^\prime, y, z, t\right) \\ 
+%             \eta    \left( x^\prime, y, z, t\right) \\  
+%             \zeta   \left( x^\prime, y, z, t\right) \\  
+%             \tau    \left( x^\prime, y, z, t\right) \\  
+%         \end{pmatrix}
+%    &=
+%         \begin{bmatrix}
+%              \frac{\partial    \xi}{\partial x^\prime}  
+%             &\frac{\partial    \xi}{\partial y}
+%             &\frac{\partial    \xi}{\partial z}
+%             &\frac{\partial    \xi}{\partial t}
+%             \\%%% 
+%              \frac{\partial    \eta}{\partial x^\prime}  
+%             &\frac{\partial    \eta}{\partial y}
+%             &\frac{\partial    \eta}{\partial z}
+%             &\frac{\partial    \eta}{\partial t}
+%             \\%%% 
+%              \frac{\partial    \zeta}{\partial x^\prime}  
+%             &\frac{\partial    \zeta}{\partial y}
+%             &\frac{\partial    \zeta}{\partial z}
+%             &\frac{\partial    \zeta}{\partial t}
+%             \\%%% 
+%              \frac{\partial    \tau}{\partial x^\prime}  
+%             &\frac{\partial    \tau}{\partial y}
+%             &\frac{\partial    \tau}{\partial z}
+%             &\frac{\partial    \tau}{\partial t}
+%         \end{bmatrix}
+%         \begin{pmatrix}
+%             x^\prime\\y\\z\\t
+%         \end{pmatrix}
+%     \end{align*}
+% \end{frame}
+% 
 
 
 
