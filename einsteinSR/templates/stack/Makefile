@@ -1,4 +1,4 @@
-myTarget=box#clock
+myTarget=stack#clock
 
 # You want latexmk to *always* run, because make does not have all the info.
 # Also, include non-file targets in .PHONY so they are run regardless of any
